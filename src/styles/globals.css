@@ -1,3 +1,7 @@
+/* TODO: Finish theme switching: https://github.com/ZeberMVP/shadcn-ui-themes */
+/* TODO: Figure out the right excalibur theme: https://ui.jln.dev/ */
+@import "themes/excalibur.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

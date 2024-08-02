@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: RootLayoutProps) {
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en" suppressHydrationWarning className={"excalibur"}>
             <body
                 className={cn(
                     "min-h-screen bg-background font-sans antialiased",
