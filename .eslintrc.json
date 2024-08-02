@@ -1,0 +1,18 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "camelcase": "error",
+    "no-multiple-empty-lines": "error",
+    "curly": "error",
+    "no-unused-vars": "error",
+    "no-duplicate-imports": "error"
+  }
+}
