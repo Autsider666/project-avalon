@@ -1,19 +1,32 @@
 "use client";
 
-import {Button} from "@/components/ui/Button";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/DropdownMenu";
+import {Button, ButtonProps} from "@/components/ui/Button";
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
+import {capitalize} from "@/lib/utils";
 import {MoonIcon, SunIcon} from "@radix-ui/react-icons";
 import {useTheme} from "next-themes";
 import * as React from "react";
 import {ReactElement} from "react";
 
-export function ModeToggle(): ReactElement {
-    const {setTheme} = useTheme();
+type ModeToggleProps = {
+    size?: ButtonProps["size"],
+}
 
+export function ModeToggle({size = 'icon'}: ModeToggleProps): ReactElement {
+    const {setTheme, theme, themes} = useTheme();
+    console.log(theme, themes);
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button
+                    variant="outline"
+                    size={size}
+                >
                     <SunIcon
                         className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"/>
                     <MoonIcon
@@ -22,15 +35,15 @@ export function ModeToggle(): ReactElement {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setTheme("light")}>
-                    Light
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
-                    Dark
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
-                    System
-                </DropdownMenuItem>
+                {themes.map(
+                    themeOption => <DropdownMenuCheckboxItem
+                        key={themeOption}
+                        checked={theme === themeOption}
+                        onClick={() => setTheme(themeOption)}
+                    >
+                        {capitalize(themeOption)}
+                    </DropdownMenuCheckboxItem>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     );
