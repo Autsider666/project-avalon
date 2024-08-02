@@ -19,7 +19,7 @@ type ModeToggleProps = {
 
 export function ModeToggle({size = 'icon'}: ModeToggleProps): ReactElement {
     const {setTheme, theme, themes} = useTheme();
-    console.log(theme, themes);
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>

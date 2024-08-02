@@ -1,3 +1,4 @@
+import {Fieldset} from "@/components/form/Fieldset";
 import {ModeToggle} from "@/components/theme/ModeToggle";
 import {Button} from "@/components/ui/Button";
 import {
@@ -8,26 +9,11 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/Drawer";
-import {Input} from "@/components/ui/Input";
 import {Label} from "@/components/ui/Label";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/Select";
 import {Textarea} from "@/components/ui/Textarea";
 import {Tooltip, TooltipContent, TooltipTrigger,} from "@/components/ui/Tooltip";
-import {
-    Bird,
-    Book,
-    Bot,
-    Code2,
-    LifeBuoy,
-    Rabbit,
-    Settings,
-    Settings2,
-    Share,
-    SquareTerminal,
-    SquareUser,
-    Sword,
-    Turtle,
-} from "lucide-react";
+import {Book, Bot, Code2, LifeBuoy, Settings, Settings2, Share, SquareTerminal, SquareUser, Sword,} from "lucide-react";
 import {ReactElement} from "react";
 
 
@@ -168,89 +154,7 @@ export default function Playground(): ReactElement {
                                 </DrawerDescription>
                             </DrawerHeader>
                             <form className="grid w-full items-start gap-6 overflow-auto p-4 pt-0">
-                                <fieldset className="grid gap-6 rounded-lg border p-4">
-                                    <legend className="-ml-1 px-1 text-sm font-medium">
-                                        Settings
-                                    </legend>
-                                    <div className="grid gap-3">
-                                        <Label htmlFor="model">Model</Label>
-                                        <Select>
-                                            <SelectTrigger
-                                                id="model"
-                                                className="items-start [&_[data-description]]:hidden"
-                                            >
-                                                <SelectValue placeholder="Select a model"/>
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="genesis">
-                                                    <div className="flex items-start gap-3 text-muted-foreground">
-                                                        <Rabbit className="size-5"/>
-                                                        <div className="grid gap-0.5">
-                                                            <p>
-                                                                Neural{" "}
-                                                                <span className="font-medium text-foreground">
-                                  Genesis
-                                </span>
-                                                            </p>
-                                                            <p className="text-xs" data-description>
-                                                                Our fastest model for general use cases.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </SelectItem>
-                                                <SelectItem value="explorer">
-                                                    <div className="flex items-start gap-3 text-muted-foreground">
-                                                        <Bird className="size-5"/>
-                                                        <div className="grid gap-0.5">
-                                                            <p>
-                                                                Neural{" "}
-                                                                <span className="font-medium text-foreground">
-                                  Explorer
-                                </span>
-                                                            </p>
-                                                            <p className="text-xs" data-description>
-                                                                Performance and speed for efficiency.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </SelectItem>
-                                                <SelectItem value="quantum">
-                                                    <div className="flex items-start gap-3 text-muted-foreground">
-                                                        <Turtle className="size-5"/>
-                                                        <div className="grid gap-0.5">
-                                                            <p>
-                                                                Neural{" "}
-                                                                <span className="font-medium text-foreground">
-                                  Quantum
-                                </span>
-                                                            </p>
-                                                            <p className="text-xs" data-description>
-                                                                The most powerful model for complex
-                                                                computations.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="grid gap-3">
-                                        <Label htmlFor="temperature">Temperature</Label>
-                                        <Input id="temperature" type="number" placeholder="0.4"/>
-                                    </div>
-                                    <div className="grid gap-3">
-                                        <Label htmlFor="top-p">Top P</Label>
-                                        <Input id="top-p" type="number" placeholder="0.7"/>
-                                    </div>
-                                    <div className="grid gap-3">
-                                        <Label htmlFor="top-k">Top K</Label>
-                                        <Input id="top-k" type="number" placeholder="0.0"/>
-                                    </div>
-                                </fieldset>
-                                <fieldset className="grid gap-6 rounded-lg border p-4">
-                                    <legend className="-ml-1 px-1 text-sm font-medium">
-                                        Messages
-                                    </legend>
+                                <Fieldset name="Settings">
                                     <div className="grid gap-3">
                                         <Label htmlFor="role">Role</Label>
                                         <Select defaultValue="system">
@@ -268,7 +172,7 @@ export default function Playground(): ReactElement {
                                         <Label htmlFor="content">Content</Label>
                                         <Textarea id="content" placeholder="You are a..."/>
                                     </div>
-                                </fieldset>
+                                </Fieldset>
                             </form>
                         </DrawerContent>
                     </Drawer>
@@ -281,97 +185,14 @@ export default function Playground(): ReactElement {
                         <Share className="size-3.5"/>
                         Share
                     </Button>
-                    <ModeToggle size="sm" />
+                    <ModeToggle size="sm"/>
                 </header>
                 <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
                     <div
                         className="relative hidden flex-col items-start gap-8 md:flex" x-chunk="dashboard-03-chunk-0"
                     >
                         <form className="grid w-full items-start gap-6">
-                            <fieldset className="grid gap-6 rounded-lg border p-4">
-                                <legend className="-ml-1 px-1 text-sm font-medium">
-                                    Settings
-                                </legend>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="model">Model</Label>
-                                    <Select>
-                                        <SelectTrigger
-                                            id="model"
-                                            className="items-start [&_[data-description]]:hidden"
-                                        >
-                                            <SelectValue placeholder="Select a model"/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="genesis">
-                                                <div className="flex items-start gap-3 text-muted-foreground">
-                                                    <Rabbit className="size-5"/>
-                                                    <div className="grid gap-0.5">
-                                                        <p>
-                                                            Neural{" "}
-                                                            <span className="font-medium text-foreground">
-                                Genesis
-                              </span>
-                                                        </p>
-                                                        <p className="text-xs" data-description>
-                                                            Our fastest model for general use cases.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </SelectItem>
-                                            <SelectItem value="explorer">
-                                                <div className="flex items-start gap-3 text-muted-foreground">
-                                                    <Bird className="size-5"/>
-                                                    <div className="grid gap-0.5">
-                                                        <p>
-                                                            Neural{" "}
-                                                            <span className="font-medium text-foreground">
-                                Explorer
-                              </span>
-                                                        </p>
-                                                        <p className="text-xs" data-description>
-                                                            Performance and speed for efficiency.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </SelectItem>
-                                            <SelectItem value="quantum">
-                                                <div className="flex items-start gap-3 text-muted-foreground">
-                                                    <Turtle className="size-5"/>
-                                                    <div className="grid gap-0.5">
-                                                        <p>
-                                                            Neural{" "}
-                                                            <span className="font-medium text-foreground">
-                                Quantum
-                              </span>
-                                                        </p>
-                                                        <p className="text-xs" data-description>
-                                                            The most powerful model for complex computations.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="temperature">Temperature</Label>
-                                    <Input id="temperature" type="number" placeholder="0.4"/>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="grid gap-3">
-                                        <Label htmlFor="top-p">Top P</Label>
-                                        <Input id="top-p" type="number" placeholder="0.7"/>
-                                    </div>
-                                    <div className="grid gap-3">
-                                        <Label htmlFor="top-k">Top K</Label>
-                                        <Input id="top-k" type="number" placeholder="0.0"/>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset className="grid gap-6 rounded-lg border p-4">
-                                <legend className="-ml-1 px-1 text-sm font-medium">
-                                    Messages
-                                </legend>
+                            <Fieldset name="Settings">
                                 <div className="grid gap-3">
                                     <Label htmlFor="role">Role</Label>
                                     <Select defaultValue="system">
@@ -387,13 +208,9 @@ export default function Playground(): ReactElement {
                                 </div>
                                 <div className="grid gap-3">
                                     <Label htmlFor="content">Content</Label>
-                                    <Textarea
-                                        id="content"
-                                        placeholder="You are a..."
-                                        className="min-h-[9.5rem]"
-                                    />
+                                    <Textarea id="content" placeholder="You are a..."/>
                                 </div>
-                            </fieldset>
+                            </Fieldset>
                         </form>
                     </div>
                     <div
