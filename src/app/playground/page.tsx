@@ -1,4 +1,6 @@
+import {CodeBlock} from "@/components/CodeBlock";
 import {Fieldset} from "@/components/form/Fieldset";
+import {ShikiCodeBlock} from "@/components/ShikiCodeBlock";
 import {ModeToggle} from "@/components/theme/ModeToggle";
 import {Button} from "@/components/ui/Button";
 import {
@@ -215,6 +217,8 @@ export default function Playground(): ReactElement {
                     </div>
                     <div
                         className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
+                        <ShikiCodeBlock fileName="test.tsx" code={"const a = 1 + 3;\nconsole.log(a);"}/>
+                        <CodeBlock/>
                         {/*<div className="flex-1"/>*/}
                         {/*<form*/}
                         {/*    className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"*/}
