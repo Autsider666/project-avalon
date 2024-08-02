@@ -180,6 +180,7 @@ export default function Playground(): ReactElement {
                         </DrawerContent>
                     </Drawer>
                     <div className="ml-auto"/>
+                    {/*<Search onChange={value => console.log(value)}/>*/}
                     <Button
                         variant="outline"
                         size="sm"
@@ -218,7 +219,7 @@ export default function Playground(): ReactElement {
                     </div>
                     <div
                         className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
-                        {Register.map(({name, description, files}) => <Card key={name}>
+                        {Register.map(({name, description, files}) => <Card key={name} className="mb-2">
                             <CardHeader>
                                 <CardTitle>{name}</CardTitle>
                                 {description ? <CardDescription>{description}</CardDescription> : undefined}
