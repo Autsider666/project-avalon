@@ -1,9 +1,32 @@
 import {ShikiCodeBlock} from "@/components/ShikiCodeBlock";
+import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/Tooltip";
 import {getCode} from "@/hooks/getCode";
 import {ReactElement} from "react";
+import {BundledLanguage} from "shiki";
+import {bundledLanguages} from "shiki/langs";
 
-export async function CodeBlock(): Promise<ReactElement> {
-    const {fileName, code} = await getCode('src/components/form/Fieldset.tsx');
+function isBundledLanguage(extension: string): extension is BundledLanguage {
+    return Object.keys(bundledLanguages).includes(extension) !== undefined;
+}
 
-    return <ShikiCodeBlock fileName={fileName} code={code}/>;
+type CodeBlockProps = {
+    filePath: string,
+}
+
+export async function CodeBlock({filePath}: CodeBlockProps): Promise<ReactElement> {
+    const {name, path, code, extension} = await getCode(filePath);
+
+    if (!isBundledLanguage(extension)) {
+        throw new Error('Invalid extension: ' + extension);
+    }
+
+    return <ShikiCodeBlock fileName={
+        <Tooltip>
+            <TooltipTrigger>{name}</TooltipTrigger>
+            <TooltipContent>{path}</TooltipContent>
+        </Tooltip>
+    }
+                           code={code}
+                           language={extension}
+    />;
 }

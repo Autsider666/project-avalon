@@ -1,8 +1,8 @@
 import {CodeBlock} from "@/components/CodeBlock";
 import {Fieldset} from "@/components/form/Fieldset";
-import {ShikiCodeBlock} from "@/components/ShikiCodeBlock";
 import {ModeToggle} from "@/components/theme/ModeToggle";
 import {Button} from "@/components/ui/Button";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/Card";
 import {
     Drawer,
     DrawerContent,
@@ -15,6 +15,7 @@ import {Label} from "@/components/ui/Label";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/Select";
 import {Textarea} from "@/components/ui/Textarea";
 import {Tooltip, TooltipContent, TooltipTrigger,} from "@/components/ui/Tooltip";
+import {Register} from "@/registry/register";
 import {Book, Bot, Code2, LifeBuoy, Settings, Settings2, Share, SquareTerminal, SquareUser, Sword,} from "lucide-react";
 import {ReactElement} from "react";
 
@@ -139,7 +140,7 @@ export default function Playground(): ReactElement {
                 </nav>
             </aside>
             <div className="flex flex-col">
-                <header className="sticky top-0 z-10 flex h-[53px] items-center gap-1 border-b bg-background px-4">
+                <header className="sticky top-0 z-20 flex h-[53px] items-center gap-1 border-b bg-background px-4">
                     <h1 className="text-xl font-semibold">Playground</h1>
                     <Drawer>
                         <DrawerTrigger asChild>
@@ -217,8 +218,15 @@ export default function Playground(): ReactElement {
                     </div>
                     <div
                         className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
-                        <ShikiCodeBlock fileName="test.tsx" code={"const a = 1 + 3;\nconsole.log(a);"}/>
-                        <CodeBlock/>
+                        {Register.map(({name, description, files}) => <Card key={name}>
+                            <CardHeader>
+                                <CardTitle>{name}</CardTitle>
+                                {description ? <CardDescription>{description}</CardDescription> : undefined}
+                            </CardHeader>
+                            <CardContent>
+                                {files.map(filePath => <CodeBlock key={filePath} filePath={filePath}/>)}
+                            </CardContent>
+                        </Card>)}
                         {/*<div className="flex-1"/>*/}
                         {/*<form*/}
                         {/*    className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"*/}

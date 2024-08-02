@@ -1,14 +1,16 @@
 "use server";
 
 import {promises as fs} from "fs";
-import path from "path";
+import path from "node:path";
 
-export async function getCode(name: string): Promise<{ fileName: string, code: string }> {
-    const code = await readCode(name);
+export async function getCode(filePath: string): Promise<{ path: string, name: string, extension: string, code: string }> {
+    const code = await readCode(filePath);
 
     return {
-        fileName: name,
+        path: filePath,
         code,
+        extension: path.extname(filePath).split('.').join(""),
+        name: path.basename(filePath),
     };
 }
 

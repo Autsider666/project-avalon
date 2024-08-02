@@ -1,9 +1,9 @@
 import {CopyCodeButton} from "@/components/CopyCodeButton";
-import {ReactElement} from "react";
+import {ReactElement, ReactNode} from "react";
 import {BundledLanguage, BundledTheme, codeToHtml} from "shiki";
 
 type ShikiCodeBlockProps = {
-    fileName?: string,
+    fileName?: ReactNode,
     code: string,
     language?: BundledLanguage,
     theme?: BundledTheme,
