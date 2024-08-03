@@ -5,7 +5,7 @@ import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuTrigger,
+    DropdownMenuTrigger, DropdownSide,
 } from "@/components/ui/DropdownMenu";
 import {capitalize} from "@/lib/utils";
 import {MoonIcon, SunIcon} from "@radix-ui/react-icons";
@@ -15,16 +15,19 @@ import {ReactElement} from "react";
 
 type ModeToggleProps = {
     size?: ButtonProps["size"],
+    variant?: ButtonProps["variant"],
+    side?: DropdownSide,
+    sideOffset?: number,
 }
 
-export function ModeToggle({size = 'icon'}: ModeToggleProps): ReactElement {
+export function ModeToggle({size = 'icon',variant ="outline", side, sideOffset}: ModeToggleProps): ReactElement {
     const {setTheme, theme, themes} = useTheme();
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button
-                    variant="outline"
+                    variant={variant}
                     size={size}
                 >
                     <SunIcon
@@ -34,7 +37,7 @@ export function ModeToggle({size = 'icon'}: ModeToggleProps): ReactElement {
                     <span className="sr-only">Toggle theme</span>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" side={side} sideOffset={sideOffset}>
                 {themes.map(
                     themeOption => <DropdownMenuCheckboxItem
                         key={themeOption}

@@ -3,7 +3,10 @@
 import {cn} from "@/lib/utils";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import {CheckIcon, ChevronRightIcon, DotFilledIcon,} from "@radix-ui/react-icons";
+import {SIDE_OPTIONS} from "@radix-ui/react-popper";
 import * as React from "react";
+
+export type DropdownSide = (typeof SIDE_OPTIONS)[number];
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
