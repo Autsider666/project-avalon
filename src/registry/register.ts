@@ -8,26 +8,20 @@ type RegisterItem = {
 
 export const Register: RegisterItem[] = [
     {
-        name: 'Fieldset',
+        name: 'Fieldset Example',
         creator: 'Autsider',
         description: 'Test component',
-        files: ['src/components/form/Fieldset.tsx']
+        files: ['src/components/form/Fieldset.tsx'],
+        // categories: ['test'],
     },
     {
-        name: 'BaseComponent',
+        name: 'Auto-targeting',
         creator: 'Autsider',
-        files: ['src/registry/Excalibur/BaseComponent.ts']
-    },
-    {
-        name: 'HasTargetComponent',
-        description: 'The current target of the entity. Can be added manually or by using SearchesTargetComponent',
-        creator: 'Autsider',
-        files: ['src/registry/Excalibur/Component/HasTargetComponent.ts']
-    },
-    {
-        name: 'SearchesTargetComponent',
-        description: 'Searches the surroundings of the entity periodically for its next target.',
-        creator: 'Autsider',
-        files: ['src/registry/Excalibur/Component/SearchesTargetComponent.ts']
+        files: [
+            'src/registry/Excalibur/Component/SearchesTargetComponent.ts',
+            'src/registry/Excalibur/Component/HasTargetComponent.ts',
+            'src/registry/Excalibur/BaseComponent.ts'
+        ],
+        categories: ['test'],
     },
 ] as const;

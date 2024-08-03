@@ -2,31 +2,35 @@
 
 import {Input} from "@/components/ui/Input";
 import {SearchIcon} from "lucide-react";
-import {ChangeEvent, ReactElement} from "react";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {ReactElement} from "react";
+import {useDebouncedCallback} from "use-debounce";
 
-type SearchProps = {
-    onChange: (value: string) => void,
-}
+export function Search(): ReactElement {
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const {replace} = useRouter();
 
-export function Search({onChange}: SearchProps): ReactElement {
-    // const [value, setValue] = useState<string | undefined>(undefined);
+    const handleSearch = useDebouncedCallback((term: string): void => {
+        const params = new URLSearchParams(searchParams);
 
-    const handleChange = ({target}: ChangeEvent<HTMLInputElement>): void => {
-        const newValue = target.value;
+        if (term) {
+            params.set('search', term);
+        } else {
+            params.delete('search');
+        }
 
-        // setValue(newValue);
-
-        onChange(newValue);
-    };
+        replace(`${pathname}?${params.toString()}`);
+    }, 300);
 
     return <div className="relative ml-auto flex-1 md:grow-0">
         <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
         <Input
             type="search"
             placeholder="Search..."
-            className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[225px]"
-            // value={value}
-            onChange={handleChange}
+            className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+            onChange={({target}) => handleSearch(target.value)}
+            defaultValue={searchParams.get('search')?.toString()}
         />
     </div>;
 }
