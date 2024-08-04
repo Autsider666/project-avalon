@@ -1,5 +1,5 @@
 import {Actor} from "excalibur";
-import {BaseComponent} from "../BaseComponent";
+import {BaseComponent} from "@/registry/Excalibur/BaseComponent";
 
 export class HasTargetComponent extends BaseComponent {
     constructor(public readonly target: Actor) {

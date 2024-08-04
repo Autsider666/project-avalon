@@ -1,15 +1,13 @@
-// import {ShikiCodeBlock} from "@/components/ShikiCodeBlock";
-import {ShikiCodeBlock} from "@/components/ShikiCodeBlock";
-import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/Tooltip";
-// import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/Tooltip";
-import {getCode} from "@/hooks/getCode";
-import {ReactElement} from "react";
+"use server";
 
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import {darcula} from 'react-syntax-highlighter/dist/esm/styles/hljs';
-// import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism';
-// import {darcula} from 'react-syntax-highlighter/dist/esm/styles/prism';
-import {BundledLanguage} from "shiki";
+import {CodeTooltip} from "@/components/CodeTooltip";
+import {CopyCodeButton} from "@/components/CopyCodeButton";
+import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/Tooltip";
+import {getFile} from "@/hooks/getFile";
+import {Shard} from "@/registry/ShardRegister";
+import parse, {Element, HTMLReactParserOptions} from "html-react-parser";
+import {ReactElement} from "react";
+import {BundledLanguage, codeToHtml, ShikiTransformer} from "shiki";
 import {bundledLanguages} from "shiki/langs";
 
 function isBundledLanguage(extension: string): extension is BundledLanguage {
@@ -18,41 +16,78 @@ function isBundledLanguage(extension: string): extension is BundledLanguage {
 
 type CodeBlockProps = {
     filePath: string,
+    shard: Shard,
+    popover?: boolean,
 }
 
-export async function CodeBlock({filePath}: CodeBlockProps): Promise<ReactElement> {
-    const {name, path, code, extension} = await getCode(filePath);
+export async function CodeBlock({filePath, shard, popover = true}: CodeBlockProps): Promise<ReactElement> {
+    const {name, path, code, extension} = await getFile(filePath);
 
     if (!isBundledLanguage(extension)) {
         throw new Error('Invalid extension: ' + extension);
     }
 
-    // return <fieldset className="relative grid gap-6 rounded-lg border m-1">
-    //     <legend className="ml-1 px-1 text-sm font-medium z-10">
-    //         {name}
-    //     </legend>
-    //     <SyntaxHighlighter
-    //         language={extension}
-    //         style={darcula}
-    //         // wrapLines={true}
-    //         wrapLongLines={true}
-    //         showLineNumbers={true}
-    //         customStyle={{
-    //             // width: '100%',
-    //             // whiteSpace: 'pre-wrap',
-    //         }}
-    //     >
-    //         {code}
-    //     </SyntaxHighlighter>
-    // </fieldset>;
+    const {renderToString} = await import('react-dom/server');
 
-    return <ShikiCodeBlock fileName={
-        <Tooltip>
-            <TooltipTrigger>{name}</TooltipTrigger>
-            <TooltipContent>{path}</TooltipContent>
-        </Tooltip>
+    const transformers: ShikiTransformer[] = [];
+    if (popover) {
+        transformers.push({
+            postprocess(html, line) {
+                return html.replaceAll(
+                    /"(@\/[\w\/]*)"/gm,
+                    (match) => renderToString(<span data-popover={match}>{match}</span>),
+                    // (match) => renderToString(<CodeTooltip match={match}/>),
+                );
+            }
+        });
     }
-                           code={code}
-                           language={extension}
-    />;
+
+    // noinspection ES6RedundantAwait
+    const html = await codeToHtml(code, {
+        lang: extension,
+        theme: "ayu-dark",
+        transformers,
+    });
+
+    const elements = parse(html, {
+        replace(domNode) {
+            if (!(domNode instanceof Element)) {
+                return;
+            }
+
+            const popover = domNode.attribs['data-popover'];
+            if (!popover) {
+                return;
+            }
+
+            return <CodeTooltip match={popover} shard={shard} extension={extension}/>;
+        },
+    } satisfies HTMLReactParserOptions);
+
+    return <fieldset className="relative grid gap-6 rounded-lg border m-1">
+        <legend className="ml-1 px-1 text-sm font-medium z-10">
+            <Tooltip>
+                <TooltipTrigger>{name}</TooltipTrigger>
+                <TooltipContent>{path}</TooltipContent>
+            </Tooltip>
+        </legend>
+        <div className="absolute -top-4 right-2 z-10">
+            <CopyCodeButton code={code}/>
+        </div>
+        <div className="-mt-2 z-0">
+            {elements}
+        </div>
+    </fieldset>;
+
+    // return <ShikiCodeBlock fileName={
+    //     <Tooltip>
+    //         <TooltipTrigger>{name}</TooltipTrigger>
+    //         <TooltipContent>{path}</TooltipContent>
+    //     </Tooltip>
+    // }
+    //                        code={code}
+    //                        language={extension}
+    //                        popover={popover}
+    //                        shard={shard}
+    // />;
 }

@@ -1,6 +1,6 @@
 import {Actor, PreUpdateEvent, TagQuery} from "excalibur";
-import {BaseComponent} from "../BaseComponent";
-import {HasTargetComponent} from "./HasTargetComponent";
+import {BaseComponent} from "@/registry/Excalibur/BaseComponent";
+import {HasTargetComponent} from "@/registry/Excalibur/Component/HasTargetComponent";
 
 export class SearchesTargetComponent extends BaseComponent {
     private readonly queryTags: string[];

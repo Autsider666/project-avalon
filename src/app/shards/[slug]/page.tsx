@@ -1,15 +1,16 @@
-import {CodeBlock} from "@/components/CodeBlock";
-import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/Accordion";
+import {ShardFiles} from "@/components/ShardFiles";
 import {Badge} from "@/components/ui/Badge";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/Card";
 import {fetchShard} from "@/lib/data";
-import {PageProps, Shard} from "@/lib/types";
+import {PageProps} from "@/lib/types";
+import {Shard} from "@/registry/ShardRegister";
 import {clsx} from "clsx";
 import Link from "next/link";
 import {redirect} from "next/navigation";
 import {ReactElement} from "react";
 
-export default async function ShardPage({params}: PageProps): Promise<ReactElement> {
+export default async function ShardPage({params, searchParams}: PageProps<{ file?: string }>): Promise<ReactElement> {
+
     const slug = params?.slug;
     if (!slug) {
         redirect('/shards');
@@ -23,7 +24,9 @@ export default async function ShardPage({params}: PageProps): Promise<ReactEleme
         redirect('/shards');
     }
 
-    const {name, creator, categories, description, files} = shard;
+    const activeFile = searchParams?.file ?? Object.values(shard.files)[0].identifier;
+
+    const {name, creator, categories, description} = shard;
 
     const hasCategories = categories && categories.length > 0;
 
@@ -55,6 +58,33 @@ export default async function ShardPage({params}: PageProps): Promise<ReactEleme
                 {/*</div>*/}
             </div>
             <div className="grid gap-4 md:grid-cols-1 md:gap-8 lg:grid-cols-3">
+                {/*<div role="tablist" aria-orientation="horizontal"*/}
+                {/*     className="h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground flex flex-col sm:flex-row gap-0 sm:gap-0.5"*/}
+                {/*     data-id="2" tabIndex="0" data-orientation="horizontal" style={{outline: 'none'}}>*/}
+                {/*    <button type="button" role="tab" aria-selected="true" aria-controls="radix-:r5:-content-overview"*/}
+                {/*            data-state="active" id="radix-:r5:-trigger-overview"*/}
+                {/*            className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow"*/}
+                {/*            data-id="3" tabIndex="-1" data-orientation="horizontal"*/}
+                {/*            data-radix-collection-item="">Overview*/}
+                {/*    </button>*/}
+                {/*    <button type="button" role="tab" aria-selected="false" aria-controls="radix-:r5:-content-metrics"*/}
+                {/*            data-state="inactive" id="radix-:r5:-trigger-metrics"*/}
+                {/*            className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow"*/}
+                {/*            data-id="4" tabIndex="-1" data-orientation="horizontal"*/}
+                {/*            data-radix-collection-item="">Metrics*/}
+                {/*    </button>*/}
+                {/*    <button type="button" role="tab" aria-selected="false" aria-controls="radix-:r5:-content-growth"*/}
+                {/*            data-state="inactive" id="radix-:r5:-trigger-growth"*/}
+                {/*            className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow"*/}
+                {/*            data-id="5" tabIndex="-1" data-orientation="horizontal" data-radix-collection-item="">Growth*/}
+                {/*    </button>*/}
+                {/*    <button type="button" role="tab" aria-selected="false" aria-controls="radix-:r5:-content-engagement"*/}
+                {/*            data-state="inactive" id="radix-:r5:-trigger-engagement"*/}
+                {/*            className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow"*/}
+                {/*            data-id="6" tabIndex="-1" data-orientation="horizontal"*/}
+                {/*            data-radix-collection-item="">Engagement*/}
+                {/*    </button>*/}
+                {/*</div>*/}
                 <Card className="col-span-2">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
@@ -87,32 +117,59 @@ export default async function ShardPage({params}: PageProps): Promise<ReactEleme
                     </CardContent>
                 </Card>
             </div>
-            <div className={`grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8`}>
-                <div className={clsx(`grid auto-rows-max items-start gap-4 lg:gap-8 lg:col-span-3`)}>
-                    <Card x-chunk="A card with a form to edit the product stock and variants">
-                        <CardHeader>
-                            <CardTitle>Files</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <Accordion type="single" collapsible defaultValue={files[0]}>
-                                {files.map(filePath =>
-                                    <AccordionItem key={filePath} value={filePath}>
-                                        <AccordionTrigger>{filePath}</AccordionTrigger>
-                                        <AccordionContent>
-                                            <CodeBlock filePath={filePath}/>
-                                        </AccordionContent>
-                                    </AccordionItem>)}
-                            </Accordion>
-                        </CardContent>
-                        {/*<CardFooter className="justify-center border-t p-4">*/}
-                        {/*    <Button size="sm" variant="ghost" className="gap-1">*/}
-                        {/*        <PlusCircle className="h-3.5 w-3.5"/>*/}
-                        {/*        Add Variant*/}
-                        {/*    </Button>*/}
-                        {/*</CardFooter>*/}
-                    </Card>
-                </div>
-            </div>
+            {/*<div className={`grid gap-4 lg:grid-cols-3 lg:gap-8`}>*/}
+            {/*    <div className={clsx(`grid auto-rows-max items-start gap-4 lg:gap-8 lg:col-span-3`)}>*/}
+            {/*        <Card x-chunk="A card with a form to edit the product stock and variants">*/}
+            {/*            <CardHeader>*/}
+            {/*                <CardTitle>Files</CardTitle>*/}
+            {/*            </CardHeader>*/}
+            {/*            <CardContent>*/}
+            {/*                <Accordion type="single" collapsible defaultValue={files[0]}>*/}
+            {/*                    {files.map(filePath =>*/}
+            {/*                        <AccordionItem key={filePath} id={filePath} value={filePath}>*/}
+            {/*                            <AccordionTrigger>{filePath}</AccordionTrigger>*/}
+            {/*                            <AccordionContent>*/}
+            {/*                                <CodeBlock filePath={filePath} shard={shard}/>*/}
+            {/*                            </AccordionContent>*/}
+            {/*                        </AccordionItem>)}*/}
+            {/*                </Accordion>*/}
+            {/*            </CardContent>*/}
+            {/*            /!*<CardFooter className="justify-center border-t p-4">*!/*/}
+            {/*            /!*    <Button size="sm" variant="ghost" className="gap-1">*!/*/}
+            {/*            /!*        <PlusCircle className="h-3.5 w-3.5"/>*!/*/}
+            {/*            /!*        Add Variant*!/*/}
+            {/*            /!*    </Button>*!/*/}
+            {/*            /!*</CardFooter>*!/*/}
+            {/*        </Card>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+            {/*<div className={`grid gap-4 lg:grid-cols-3 lg:gap-8`}>*/}
+            {/*<div className={clsx(`grid auto-rows-max items-start gap-4 lg:gap-8 lg:col-span-3`)}>*/}
+            {/*    <Card x-chunk="A card with a form to edit the product stock and variants">*/}
+            {/*        <CardHeader>*/}
+            {/*            <CardTitle>Files</CardTitle>*/}
+            {/*        </CardHeader>*/}
+            {/*        <CardContent>*/}
+            <ShardFiles shard={shard} activeFile={activeFile}/>
+            {/*<Accordion type="single" collapsible defaultValue={files[0].identifier}>*/}
+            {/*    {files.map(({identifier, path}) =>*/}
+            {/*        <AccordionItem key={identifier} id={identifier} value={identifier}>*/}
+            {/*            <AccordionTrigger>{identifier}</AccordionTrigger>*/}
+            {/*            <AccordionContent>*/}
+            {/*                <CodeBlock filePath={path} shard={shard}/>*/}
+            {/*            </AccordionContent>*/}
+            {/*        </AccordionItem>)}*/}
+            {/*</Accordion>*/}
+            {/*    </CardContent>*/}
+            {/*    /!*<CardFooter className="justify-center border-t p-4">*!/*/}
+            {/*    /!*    <Button size="sm" variant="ghost" className="gap-1">*!/*/}
+            {/*    /!*        <PlusCircle className="h-3.5 w-3.5"/>*!/*/}
+            {/*    /!*        Add Variant*!/*/}
+            {/*    /!*    </Button>*!/*/}
+            {/*    /!*</CardFooter>*!/*/}
+            {/*</Card>*/}
+            {/*</div>*/}
+            {/*</div>*/}
         </div>
     </main>;
 }

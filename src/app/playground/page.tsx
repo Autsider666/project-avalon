@@ -4,7 +4,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import {Label} from "@/components/ui/Label";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/Select";
 import {Textarea} from "@/components/ui/Textarea";
-import {Register} from "@/registry/register";
+import {ShardRegister} from "@/registry/ShardRegister";
 import {ReactElement} from "react";
 
 
@@ -36,15 +36,20 @@ export default function Playground(): ReactElement {
             </form>
         </div>
         <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
-            {Register.map(({name, description, files}) => <Card key={name} className="mb-2">
-                <CardHeader>
-                    <CardTitle>{name}</CardTitle>
-                    {description ? <CardDescription>{description}</CardDescription> : undefined}
-                </CardHeader>
-                <CardContent>
-                    {files.map(filePath => <CodeBlock key={filePath} filePath={filePath}/>)}
-                </CardContent>
-            </Card>)}
+            {/*{ShardRegister.map((shard) => {*/}
+            {/*    const {name, description, files} = shard;*/}
+            {/*    return <Card key={name} className="mb-2">*/}
+            {/*        <CardHeader>*/}
+            {/*            <CardTitle>{name}</CardTitle>*/}
+            {/*            {description ? <CardDescription>{description}</CardDescription> : undefined}*/}
+            {/*        </CardHeader>*/}
+            {/*        <CardContent>*/}
+            {/*            {files.map(filePath => <CodeBlock key={filePath} filePath={filePath} shard={shard}/>)}*/}
+            {/*        </CardContent>*/}
+            {/*    </Card>;*/}
+            {/*})}*/}
+
+
             {/*<div className="flex-1"/>*/}
             {/*<form*/}
             {/*    className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"*/}
