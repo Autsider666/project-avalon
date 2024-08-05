@@ -48,7 +48,7 @@ const baseShards: (Omit<Shard, 'files'> & { files: string[] })[] = [
 ] as const;
 
 class Repository<T> {
-    private loaded:boolean = false;
+    private loaded: boolean = false;
     private readonly items: T[] = [];
 
     constructor(
@@ -56,19 +56,19 @@ class Repository<T> {
     ) {
     }
 
-    async getAll():Promise<T[]> {
+    async getAll(): Promise<T[]> {
         await this.load();
 
         return this.items;
     }
 
-    async getKeys():Promise<string[]> {
+    async getKeys(): Promise<string[]> {
         await this.load();
 
         return Array.from(Object.keys(this.items));
     }
 
-    async find(callback: (item:T) => boolean): Promise<T | undefined> {
+    async find(callback: (item: T) => boolean): Promise<T | undefined> {
         await this.load();
 
         for (const item of this.items) {
@@ -80,8 +80,8 @@ class Repository<T> {
         return undefined;
     }
 
-    private async load():Promise<void> {
-        if (this.loaded) {
+    private async load(): Promise<void> {
+        if (this.loaded || this.items.length > 0) {
             return;
         }
 
@@ -91,10 +91,10 @@ class Repository<T> {
     }
 }
 
-export const ShardRepository: Repository<Shard> = new Repository<Shard>(async ():Promise<Shard[]> => {
-    const shards:Shard[] = [];
+export const ShardRepository: Repository<Shard> = new Repository<Shard>(async (): Promise<Shard[]> => {
+    const shards: Shard[] = [];
     for (const {files, ...shard} of baseShards) {
-        const loadedFiles:Record<string,File> = {};
+        const loadedFiles: Record<string, File> = {};
         for (const file of files) {
             const [key, loadedFile] = await pathToFile(file);
 
