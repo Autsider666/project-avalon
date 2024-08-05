@@ -2,9 +2,8 @@
 
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/HoverCard";
 import {Shard} from "@/registry/ShardRegister";
-import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import Link from "next/link";
 import {ReactElement} from "react";
-import {useDebouncedCallback} from "use-debounce";
 
 type CodeTooltipProps = {
     match: string,
@@ -12,24 +11,15 @@ type CodeTooltipProps = {
     extension: string,
 }
 
-export function CodeTooltip({match, shard, extension}: CodeTooltipProps): ReactElement {
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const {replace} = useRouter();
+export function CodeTooltip({match, shard}: CodeTooltipProps): ReactElement {
 
-    const handleFileFocus = useDebouncedCallback((term: string): void => {
-        const params = new URLSearchParams(searchParams);
-        params.set('file', term);
 
-        replace(`${pathname}?${params.toString()}`);
-    }, 300);
-
-    const {domain,identifier} = shard.files[match.replaceAll("\"", "")];
+    const {domain, identifier} = shard.files[match.replaceAll("\"", "")];
     if (identifier) {
-        return <span
-            className="underline decoration-dashed cursor-pointer"
-            onClick={() => handleFileFocus(identifier)}
-        >{match}</span>;
+        return <Link
+            className="underline decoration-dashed cursor-pointer underline-offset-4"
+            href={`/shards/${shard.name}/${domain}`}
+        >{match}</Link>;
     }
 
     return (

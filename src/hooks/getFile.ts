@@ -1,5 +1,4 @@
 import {promises as fs} from "fs";
-import {getFilenameAndExtension} from "next/dist/build/webpack/loaders/next-metadata-route-loader";
 import path from "node:path";
 
 export async function getFile(filePath: string): Promise<{

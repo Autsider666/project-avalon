@@ -5,7 +5,8 @@ import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuTrigger, DropdownSide,
+    DropdownMenuTrigger,
+    DropdownSide,
 } from "@/components/ui/DropdownMenu";
 import {capitalize} from "@/lib/utils";
 import {MoonIcon, SunIcon} from "@radix-ui/react-icons";
@@ -20,7 +21,7 @@ type ModeToggleProps = {
     sideOffset?: number,
 }
 
-export function ModeToggle({size = 'icon',variant ="outline", side, sideOffset}: ModeToggleProps): ReactElement {
+export function ModeToggle({size = 'icon', variant = "outline", side, sideOffset}: ModeToggleProps): ReactElement {
     const {setTheme, theme, themes} = useTheme();
 
     return (

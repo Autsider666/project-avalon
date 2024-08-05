@@ -1,6 +1,5 @@
 import {MobileNavMenu} from "@/components/nav/MobileNavMenu";
 import {Search} from "@/components/Search";
-import {Input} from "@/components/ui/Input";
 import {ReactElement} from "react";
 
 export function NavHeader(): ReactElement {

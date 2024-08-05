@@ -5,7 +5,7 @@ import {Shard} from "@/registry/ShardRegister";
 import {redirect} from "next/navigation";
 import {ReactElement} from "react";
 
-export default async function ShardPage({params}: PageProps<{ file?: string }>): Promise<ReactElement> {
+export default async function ItemPage({params}: PageProps): Promise<ReactElement> {
     const slug = params?.slug;
     if (!slug) {
         redirect('/shards');
@@ -19,5 +19,16 @@ export default async function ShardPage({params}: PageProps<{ file?: string }>):
         redirect('/shards');
     }
 
-    return <ShardFiles shard={shard}/>;
+    let activeFile = params.item;
+    if (!activeFile) {
+        redirect(`/shards/${slug}`);
+    }
+
+    if (Array.isArray(activeFile)) {
+        activeFile = activeFile.join('/');
+    }
+
+    activeFile = decodeURIComponent(activeFile);
+
+    return <ShardFiles shard={shard} activeFile={activeFile}/>;
 }

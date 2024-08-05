@@ -1,10 +1,7 @@
-import {CodeBlock} from "@/components/CodeBlock";
 import {Fieldset} from "@/components/form/Fieldset";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/Card";
 import {Label} from "@/components/ui/Label";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/Select";
 import {Textarea} from "@/components/ui/Textarea";
-import {ShardRegister} from "@/registry/ShardRegister";
 import {ReactElement} from "react";
 
 
