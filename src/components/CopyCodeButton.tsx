@@ -2,14 +2,14 @@
 
 import {Button, ButtonProps} from "@/components/ui/Button";
 import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/Tooltip";
-import {cn} from "@/lib/utils";
-import {CheckIcon, ClipboardIcon} from "lucide-react";
+import {CheckIcon, ClipboardIcon, CopyIcon} from "lucide-react";
 import {ReactElement, useEffect, useState} from "react";
 
 type CopyCodeButtonProps = {
     code: string
 } & ButtonProps
 
+// TODO Copy as file: https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/write
 export function CopyCodeButton({
                                    code,
                                    className,
@@ -27,12 +27,8 @@ export function CopyCodeButton({
         <Tooltip>
             <TooltipTrigger asChild>
                 <Button
-                    size="icon"
                     variant="outline"
-                    className={cn(
-                        "[&_svg]-h-3.5 h-7 w-7 rounded-[6px] [&_svg]:w-3.5",
-                        className
-                    )}
+                    className="rounded-full max-md:px-2.5 md:px-3"
                     onClick={() => {
                         navigator.clipboard.writeText(code);
 
@@ -40,8 +36,8 @@ export function CopyCodeButton({
                     }}
                     {...props}
                 >
-                    <span className="sr-only">Copy</span>
-                    {hasCopied ? <CheckIcon/> : <ClipboardIcon/>}
+                    {hasCopied ? <CheckIcon className="size-3.5"/> : <CopyIcon className="size-3.5" />}
+                    <span className="max-md:sr-only md:ml-2">Copy</span>
                 </Button>
             </TooltipTrigger>
             <TooltipContent className="bg-black text-white">Copy code</TooltipContent>

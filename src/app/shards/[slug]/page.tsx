@@ -1,7 +1,7 @@
-import {ShardFiles} from "@/components/ShardFiles";
+import {FilesOverview} from "@/components/shards/FilesOverview";
 import {fetchShard} from "@/lib/data";
 import {PageProps} from "@/lib/types";
-import {Shard} from "@/registry/ShardRegister";
+import {Shard} from "@/registry/ShardRepository";
 import {redirect} from "next/navigation";
 import {ReactElement} from "react";
 
@@ -19,5 +19,5 @@ export default async function ShardPage({params}: PageProps<{ file?: string }>):
         redirect('/shards');
     }
 
-    return <ShardFiles shard={shard}/>;
+    return <FilesOverview shard={shard}/>;
 }

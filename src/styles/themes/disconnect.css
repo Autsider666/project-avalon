@@ -1,0 +1,44 @@
+.disconnection.light {
+    --background: 206 69% 99%;
+    --foreground: 206 65% 0%;
+    --muted: 206 24% 90%;
+    --muted-foreground: 206 9% 29%;
+    --popover: 206 69% 98%;
+    --popover-foreground: 0 0% 0%;
+    --card: 206 69% 98%;
+    --card-foreground: 0 0% 0%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --primary: 206 93% 28%;
+    --primary-foreground: 206 93% 88%;
+    --secondary: 206 9% 81%;
+    --secondary-foreground: 206 9% 21%;
+    --accent: 206 19% 74%;
+    --accent-foreground: 206 19% 14%;
+    --destructive: 3 86% 34%;
+    --destructive-foreground: 3 86% 94%;
+    --ring: 206 93% 28%;
+    --radius: 0.5rem;
+}
+
+.disconnection.dark {
+    --background: 206 35% 4%;
+    --foreground: 206 34% 99%;
+    --muted: 206 24% 10%;
+    --muted-foreground: 206 9% 71%;
+    --popover: 206 35% 5%;
+    --popover-foreground: 0 0% 100%;
+    --card: 206 35% 5%;
+    --card-foreground: 0 0% 100%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --primary: 206 93% 28%;
+    --primary-foreground: 206 93% 88%;
+    --secondary: 206 7% 14%;
+    --secondary-foreground: 206 7% 74%;
+    --accent: 206 17% 19%;
+    --accent-foreground: 206 17% 79%;
+    --destructive: 3 86% 47%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 206 93% 28%;
+}

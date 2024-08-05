@@ -1,7 +1,7 @@
-import {ShardFiles} from "@/components/ShardFiles";
+import {FilesOverview} from "@/components/shards/FilesOverview";
 import {fetchShard} from "@/lib/data";
 import {PageProps} from "@/lib/types";
-import {Shard} from "@/registry/ShardRegister";
+import {Shard} from "@/registry/ShardRepository";
 import {redirect} from "next/navigation";
 import {ReactElement} from "react";
 
@@ -30,5 +30,5 @@ export default async function ItemPage({params}: PageProps): Promise<ReactElemen
 
     activeFile = decodeURIComponent(activeFile);
 
-    return <ShardFiles shard={shard} activeFile={activeFile}/>;
+    return <FilesOverview shard={shard} activeFile={activeFile}/>;
 }

@@ -1,19 +1,17 @@
 "use client";
 
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/HoverCard";
-import {Shard} from "@/registry/ShardRegister";
+import {Shard} from "@/registry/ShardRepository";
 import Link from "next/link";
 import {ReactElement} from "react";
 
 type CodeTooltipProps = {
     match: string,
     shard: Shard,
-    extension: string,
+    language: string,
 }
 
 export function CodeTooltip({match, shard}: CodeTooltipProps): ReactElement {
-
-
     const {domain, identifier} = shard.files[match.replaceAll("\"", "")];
     if (identifier) {
         return <Link

@@ -1,6 +1,10 @@
 /* TODO: Finish theme switching: https://github.com/ZeberMVP/shadcn-ui-themes */
 /* TODO: Figure out the right excalibur theme: https://ui.jln.dev/ */
+@import "themes/disconnect.css";
+@import "themes/discord.css";
 @import "themes/excalibur.css";
+@import "themes/external-blue.css";
+@import "themes/shadcn-blue.css";
 
 @tailwind base;
 @tailwind components;
@@ -73,26 +77,8 @@
     }
 }
 
-pre.shiki {
-    padding: 15px;
-    border-radius: 0.5rem;
-    white-space: pre-wrap;
-}
-
-.twoslash-popup-docs {
-    width: 500px;
-}
-
-code {
-    counter-reset: step;
-    counter-increment: step 0;
-}
-
-code .line::before {
-    content: counter(step);
-    counter-increment: step;
-    width: 1rem;
-    margin-right: 1.5rem;
-    display: inline-block;
-    text-align: right;
-}
+/*pre.shiki {*/
+/*    padding: 15px;*/
+/*    border-radius: 0.5rem;*/
+/*    white-space: pre-wrap;*/
+/*}*/

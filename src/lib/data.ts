@@ -1,9 +1,9 @@
 "use server";
 
-import {Shard, ShardRegister} from "@/registry/ShardRegister";
+import {Shard, ShardRepository} from "@/registry/ShardRepository";
 
 export async function fetchShard(slug: string): Promise<Shard> {
-    const shard = ShardRegister.find(shard => shard.name === slug);
+    const shard = await ShardRepository.find(shard => shard.name === slug);
     if (!shard) {
         throw new Error(`Could not find shard with slug "${slug}"`);
     }
@@ -11,14 +11,14 @@ export async function fetchShard(slug: string): Promise<Shard> {
     return shard;
 }
 
-export async function fetchFilteredShards(query: string, currentPage: number): Promise<Shard[]> {
-    return ShardRegister;
+export async function fetchFilteredShards(query: string, currentPage?: number): Promise<Shard[]> {
+    return ShardRepository.getAll();
 }
 
 export async function fetchFilteredShardCount(query: string): Promise<number> {
-    return ShardRegister.length;
+    return (await fetchFilteredShards(query)).length;
 }
 
 export async function fetchShardPages(query: string, itemsPerPage: number = 20): Promise<number> {
-    return Math.ceil(Array.from(ShardRegister.keys()).length / itemsPerPage);
+    return Math.ceil((await fetchFilteredShardCount(query)) / itemsPerPage);
 }
