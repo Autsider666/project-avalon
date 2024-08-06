@@ -1,7 +1,7 @@
 "use client";
 
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/HoverCard";
-import {Shard} from "@/registry/ShardRepository";
+import {Shard} from "@/registry/Repository/ShardRepository";
 import Link from "next/link";
 import {ReactElement} from "react";
 

@@ -1,7 +1,7 @@
 import {FilesOverview} from "@/components/shards/FilesOverview";
 import {fetchShard} from "@/lib/data";
 import {PageProps} from "@/lib/types";
-import {Shard} from "@/registry/ShardRepository";
+import {Shard} from "@/registry/Repository/ShardRepository";
 import {redirect} from "next/navigation";
 import {ReactElement} from "react";
 

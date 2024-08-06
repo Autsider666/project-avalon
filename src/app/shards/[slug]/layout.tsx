@@ -3,7 +3,7 @@ import {Button} from "@/components/ui/Button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/Card";
 import {fetchShard} from "@/lib/data";
 import {LayoutProps} from "@/lib/types";
-import {Shard} from "@/registry/ShardRepository";
+import {Shard} from "@/registry/Repository/ShardRepository";
 import {clsx} from "clsx";
 import Link from "next/link";
 import {redirect} from "next/navigation";
@@ -25,7 +25,10 @@ export default async function Layout({children, params}: LayoutProps): Promise<R
 
     const activeFile = Object.values(shard.files)[0].identifier;
 
-    const {name, creator, categories, description} = shard;
+    const {name, creator, categories: unfilteredCategories, description} = shard;
+
+    //TODO find a better way to search for command group names than adding shard/theme
+    const categories = unfilteredCategories?.filter(category => category !== 'shard');
 
     const hasCategories = categories && categories.length > 0;
 
@@ -49,10 +52,9 @@ export default async function Layout({children, params}: LayoutProps): Promise<R
                     <Badge variant="default" className="ml-auto sm:ml-0 capitalize text-xs">
                         {category}
                     </Badge>
-                </Link>) : <i>Empty</i>}
+                </Link>) : undefined}
             </div>
-            {/*<div className="grid gap-4 md:grid-cols-1 md:gap-8 lg:grid-cols-3">*/}
-            {description ? <Card className="col-span-2">
+            {description ? <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-xl font-bold">
                         Description
@@ -65,24 +67,6 @@ export default async function Layout({children, params}: LayoutProps): Promise<R
                 </CardContent>
             </Card> : undefined}
 
-            {/*<Card>*/}
-            {/*    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">*/}
-            {/*        <CardTitle className="text-xl font-bold">*/}
-            {/*            Categories*/}
-            {/*        </CardTitle>*/}
-            {/*    </CardHeader>*/}
-            {/*    <CardContent>*/}
-            {/*        <span className="text-xs text-muted-foreground">*/}
-            {/*            {hasCategories ? categories.map(category => <Link key={category}*/}
-            {/*                                                              href={`/shards?category=${category}`}>*/}
-            {/*                <Badge variant="outline" className="ml-auto sm:ml-0">*/}
-            {/*                    {category}*/}
-            {/*                </Badge>*/}
-            {/*            </Link>) : <i>Empty</i>}*/}
-            {/*        </span>*/}
-            {/*    </CardContent>*/}
-            {/*</Card>*/}
-            {/*</div>*/}
             {children}
         </div>
     </main>;

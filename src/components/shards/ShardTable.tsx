@@ -20,7 +20,7 @@ type ShardTableProps = {
 
 export async function ShardTable({query, currentPage}: ShardTableProps): Promise<ReactElement> {
     const shards = await fetchFilteredShards(query, currentPage);
-
+    console.log('ShardTable', shards.length);
     return <Table>
         <TableHeader>
             <TableRow>

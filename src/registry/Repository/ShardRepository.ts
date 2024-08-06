@@ -1,5 +1,5 @@
 import {getFile} from "@/hooks/getFile";
-import Fuse, {Expression, FuseSearchOptions, IFuseOptions} from "fuse.js";
+import {BaseRepository} from "@/registry/Repository/BaseRepository";
 
 export type File = {
     identifier: string,
@@ -48,73 +48,15 @@ const baseShards: (Omit<Shard, 'files'> & { files: string[] })[] = [
     },
 ] as const;
 
-class Repository<T> {
-    private loaded: boolean = false;
-    private readonly items: T[] = [];
-    private index!: Fuse<T>;
 
-    constructor(
-        private readonly getItems: () => Promise<T[]>,
-        private readonly indexOptions: IFuseOptions<T>,
-    ) {
-    }
+let repositoryLoaded: boolean = false;
 
-    async getAll(): Promise<T[]> {
-        await this.loadData();
-
-        return this.items;
-    }
-
-    async getKeys(): Promise<string[]> {
-        await this.loadData();
-
-        return Array.from(Object.keys(this.items));
-    }
-
-    async find(callback: (item: T) => boolean): Promise<T | undefined> {
-        await this.loadData();
-
-        for (const item of this.items) {
-            if (callback(item)) {
-                return item;
-            }
-        }
-
-        return undefined;
-    }
-
-    async search(query?: string | Expression, options?: FuseSearchOptions): Promise<T[]> {
-        await this.loadIndex();
-
-        if (!query) {
-            return this.getAll();
-        }
-
-        return this.index.search(query, options).map(result => result.item);
-    }
-
-    private async loadData(): Promise<void> {
-        if (this.loaded || this.items.length > 0) {
-            return;
-        }
-
-        this.items.push(...await this.getItems());
-
-        this.loaded = true;
-    }
-
-    private async loadIndex(): Promise<void> {
-        await this.loadData();
-        if (this.index) {
-            return;
-        }
-
-        this.index = new Fuse<T>(await this.getAll(), this.indexOptions);
-    }
-}
-
-export const ShardRepository: Repository<Shard> = new Repository<Shard>(
+export const ShardRepository: BaseRepository<Shard> = new BaseRepository<Shard>(
     async (): Promise<Shard[]> => {
+        if (repositoryLoaded) {
+            return [];
+        }
+
         const shards: Shard[] = [];
         for (const {files, ...shard} of baseShards) {
             const loadedFiles: File[] = [];
@@ -126,13 +68,18 @@ export const ShardRepository: Repository<Shard> = new Repository<Shard>(
 
             shards.push({
                 ...shard,
+                categories: [...(shard.categories ?? []), 'shard'],
                 files: loadedFiles,
             });
         }
 
+        repositoryLoaded = true;
+
         return shards;
     },
     {
+        includeScore: true,
+        includeMatches: true,
         keys: [
             "name",
             "creator",

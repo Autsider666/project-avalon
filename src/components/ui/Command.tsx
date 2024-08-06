@@ -1,6 +1,6 @@
 "use client";
 
-import {Dialog, DialogContent} from "@/components/ui/Dialog";
+import {Dialog, DialogContent, DialogTitle} from "@/components/ui/Dialog";
 
 import {cn} from "@/lib/utils";
 import {type DialogProps} from "@radix-ui/react-dialog";
@@ -24,14 +24,27 @@ const Command = React.forwardRef<
 Command.displayName = CommandPrimitive.displayName;
 
 interface CommandDialogProps extends DialogProps {
+    title?: string,
+    shouldFilter?: boolean,
+    filter?: (value: string, search: string, keywords?: string[]) => number,
 }
 
-const CommandDialog = ({children, ...props}: CommandDialogProps) => {
+const CommandDialog = ({
+                           children,
+                           title,
+                           shouldFilter,
+                           filter,
+                           ...props
+                       }: CommandDialogProps) => {
     return (
         <Dialog {...props}>
             <DialogContent className="overflow-hidden p-0">
+                <DialogTitle className={title ? undefined : 'sr-only'}>{title}</DialogTitle>
                 <Command
-                    className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+                    className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5"
+                    filter={filter}
+                    shouldFilter={shouldFilter}
+                >
                     {children}
                 </Command>
             </DialogContent>
@@ -74,10 +87,10 @@ CommandList.displayName = CommandPrimitive.List.displayName;
 const CommandEmpty = React.forwardRef<
     React.ElementRef<typeof CommandPrimitive.Empty>,
     React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => (
+>(({className, ...props}, ref) => (
     <CommandPrimitive.Empty
         ref={ref}
-        className="py-6 text-center text-sm"
+        className={cn("py-6 text-center text-sm", className)}
         {...props}
     />
 ));
@@ -144,6 +157,8 @@ const CommandShortcut = ({
 };
 CommandShortcut.displayName = "CommandShortcut";
 
+const CommandLoading = CommandPrimitive.Loading;
+
 export {
     Command,
     CommandDialog,
@@ -154,4 +169,5 @@ export {
     CommandItem,
     CommandShortcut,
     CommandSeparator,
+    CommandLoading,
 };
