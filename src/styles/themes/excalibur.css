@@ -22,6 +22,7 @@
 }
 
 .excalibur.dark {
+    /*Old Excalibur colors*/
     --background: 229 41% 4%;
     --foreground: 229 23% 99%;
     --muted: 229 12% 14%;
@@ -41,4 +42,9 @@
     --destructive: 3 89% 54%;
     --destructive-foreground: 0 0% 100%;
     --ring: 229 100% 62%;
+    /*New Colors from Site*/
+    /*--background: 240, 3.6%, 11.0%;*/
+    /*--foreground: 0, 0%, 89%;*/
+    /*--muted: 240, 3.6%, 11.0%; Was for background*/
+    /*--muted-foreground: 0, 0%, 89%; Was for foreground*/
 }

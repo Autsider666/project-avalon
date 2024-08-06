@@ -17,7 +17,7 @@ import * as React from "react";
 import {ReactElement, useState} from "react";
 
 export function CommandPalette(): ReactElement {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleOpen = () => setIsOpen(true);
     const handleClose = () => setIsOpen(false);

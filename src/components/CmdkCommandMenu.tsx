@@ -1,6 +1,6 @@
 "use client";
 
-import {commandAction} from "@/app/action/commandAction";
+import {commandAction} from "@/action/commandAction";
 import {Button} from "@/components/ui/Button";
 import {CommandDialog, CommandGroup, CommandInput, CommandItem, CommandList,} from "@/components/ui/Command";
 import {cn} from "@/lib/utils";

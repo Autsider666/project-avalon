@@ -1,5 +1,5 @@
 import {ModeToggle} from "@/components/theme/ModeToggle";
-import {Puzzle, SquareTerminal, Sword} from "lucide-react";
+import {BookOpen, Puzzle, SquareTerminal, Sword} from "lucide-react";
 import {ReactElement} from "react";
 
 type MenuSection = 'top' | 'middle' | 'bottom';
@@ -55,6 +55,12 @@ export function useMenu(): MenuGroup[] {
                     label: "Playground",
                     href: "/playground",
                     getLogo: className => <SquareTerminal className={className}/>
+                },
+                {
+                    type: "link",
+                    label: "Documentation",
+                    href: "/docs",
+                    getLogo: className => <BookOpen className={className}/>
                 },
             ],
         },
