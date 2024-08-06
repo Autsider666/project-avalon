@@ -17,7 +17,7 @@ type CommandMenuProps = {
 
 const emptyQuery = '';
 
-export function CommandMenu({className}: CommandMenuProps) {
+export function CmdkCommandMenu({className}: CommandMenuProps) {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState(emptyQuery);
