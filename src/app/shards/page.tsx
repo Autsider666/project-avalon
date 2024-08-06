@@ -74,6 +74,7 @@ export default async function ShardsPage({searchParams}: PageProps<SearchParams>
                 </div>
             </CardHeader>
             <CardContent>
+
                 <Suspense key={`${query}-${currentPage}`}>
                     <ShardTable query={query} currentPage={currentPage}/>
                 </Suspense>

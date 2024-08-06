@@ -6,17 +6,22 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/Card";
 import {Combobox} from "@/components/ui/Combobox";
 import {getFile} from "@/hooks/getFile";
 import {Shard} from "@/registry/ShardRepository";
-import {ChevronDown, FileSearch} from "lucide-react";
+import {ChevronDown} from "lucide-react";
 import {redirect} from "next/navigation";
 import {ReactElement} from "react";
 
 type ShardFilesProps = {
-    activeFile?: string,
+    activeFileIdentifier?: string,
     shard: Shard,
 }
 
-export async function FilesOverview({activeFile, shard}: ShardFilesProps): Promise<ReactElement> {
-    activeFile = activeFile ?? Object.values(shard.files)[0].domain;
+export async function FilesOverview({activeFileIdentifier, shard}: ShardFilesProps): Promise<ReactElement> {
+    activeFileIdentifier = activeFileIdentifier ?? shard.files[0].domain;
+
+    const activeFile = shard.files.find(({domain}) => domain === activeFileIdentifier);
+    if (!activeFile) {
+        throw new Error('Handle better asap!'); //FIXME
+    }
 
     const handleSelect = async (domain: string): Promise<void> => {
         "use server";
@@ -24,7 +29,7 @@ export async function FilesOverview({activeFile, shard}: ShardFilesProps): Promi
         redirect(`/shards/${shard.name}/${domain}`);
     };
 
-    const {code, extension: language,path} = await getFile(shard.files[activeFile].path);
+    const {code, extension: language, path} = await getFile(activeFile.path);
 
     return <Card className="items-center justify-center">
         <CardHeader>
@@ -36,7 +41,7 @@ export async function FilesOverview({activeFile, shard}: ShardFilesProps): Promi
                             value: domain,
                             keywords: [code, domain],
                         }))}
-                        defaultValue={activeFile}
+                        defaultValue={activeFileIdentifier}
                         onSelect={handleSelect}
                         popoverClassName="w-fit"
                         triggerClassName="w-fit text-2xl font-bold first:*:underline first:*:decoration-dotted last:*:button"

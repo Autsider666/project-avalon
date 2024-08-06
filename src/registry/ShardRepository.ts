@@ -1,4 +1,5 @@
 import {getFile} from "@/hooks/getFile";
+import Fuse, {Expression, FuseSearchOptions, IFuseOptions} from "fuse.js";
 
 export type File = {
     identifier: string,
@@ -11,7 +12,7 @@ export type Shard = {
     name: string,
     creator?: string,
     description?: string,
-    files: Record<string, File>,
+    files: File[],
     categories?: string[],
 };
 
@@ -50,26 +51,28 @@ const baseShards: (Omit<Shard, 'files'> & { files: string[] })[] = [
 class Repository<T> {
     private loaded: boolean = false;
     private readonly items: T[] = [];
+    private index!: Fuse<T>;
 
     constructor(
         private readonly getItems: () => Promise<T[]>,
+        private readonly indexOptions: IFuseOptions<T>,
     ) {
     }
 
     async getAll(): Promise<T[]> {
-        await this.load();
+        await this.loadData();
 
         return this.items;
     }
 
     async getKeys(): Promise<string[]> {
-        await this.load();
+        await this.loadData();
 
         return Array.from(Object.keys(this.items));
     }
 
     async find(callback: (item: T) => boolean): Promise<T | undefined> {
-        await this.load();
+        await this.loadData();
 
         for (const item of this.items) {
             if (callback(item)) {
@@ -80,7 +83,17 @@ class Repository<T> {
         return undefined;
     }
 
-    private async load(): Promise<void> {
+    async search(query?: string | Expression, options?: FuseSearchOptions): Promise<T[]> {
+        await this.loadIndex();
+
+        if (!query) {
+            return this.getAll();
+        }
+
+        return this.index.search(query, options).map(result => result.item);
+    }
+
+    private async loadData(): Promise<void> {
         if (this.loaded || this.items.length > 0) {
             return;
         }
@@ -89,25 +102,48 @@ class Repository<T> {
 
         this.loaded = true;
     }
-}
 
-export const ShardRepository: Repository<Shard> = new Repository<Shard>(async (): Promise<Shard[]> => {
-    const shards: Shard[] = [];
-    for (const {files, ...shard} of baseShards) {
-        const loadedFiles: Record<string, File> = {};
-        for (const file of files) {
-            const [key, loadedFile] = await pathToFile(file);
-
-            loadedFiles[key] = loadedFile;
+    private async loadIndex(): Promise<void> {
+        await this.loadData();
+        if (this.index) {
+            return;
         }
 
-        shards.push({
-            ...shard,
-            files: loadedFiles,
-        });
+        this.index = new Fuse<T>(await this.getAll(), this.indexOptions);
     }
+}
 
-    return shards;
-});
+export const ShardRepository: Repository<Shard> = new Repository<Shard>(
+    async (): Promise<Shard[]> => {
+        const shards: Shard[] = [];
+        for (const {files, ...shard} of baseShards) {
+            const loadedFiles: File[] = [];
+            for (const file of files) {
+                const [, loadedFile] = await pathToFile(file);
+
+                loadedFiles.push(loadedFile);
+            }
+
+            shards.push({
+                ...shard,
+                files: loadedFiles,
+            });
+        }
+
+        return shards;
+    },
+    {
+        keys: [
+            "name",
+            "creator",
+            "description",
+            "categories",
+            "files.identifier",
+            "files.path",
+            "files.domain",
+            "files.code",
+        ],
+    }
+);
 
 

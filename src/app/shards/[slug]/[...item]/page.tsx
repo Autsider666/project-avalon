@@ -30,5 +30,5 @@ export default async function ItemPage({params}: PageProps): Promise<ReactElemen
 
     activeFile = decodeURIComponent(activeFile);
 
-    return <FilesOverview shard={shard} activeFile={activeFile}/>;
+    return <FilesOverview shard={shard} activeFileIdentifier={activeFile}/>;
 }

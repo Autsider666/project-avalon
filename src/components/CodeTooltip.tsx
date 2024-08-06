@@ -12,7 +12,14 @@ type CodeTooltipProps = {
 }
 
 export function CodeTooltip({match, shard}: CodeTooltipProps): ReactElement {
-    const {domain, identifier} = shard.files[match.replaceAll("\"", "")];
+    const activeFileIdentifier = match.replaceAll("\"", "");
+    const activeFile = shard.files.find(({domain}) => domain === activeFileIdentifier);
+    if (!activeFile) {
+        throw new Error('Handle better asap!'); //FIXME
+    }
+
+
+    const {domain, identifier} = activeFile;
     if (identifier) {
         return <Link
             className="underline decoration-dashed cursor-pointer underline-offset-4"

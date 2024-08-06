@@ -1,6 +1,7 @@
 "use server";
 
 import {Shard, ShardRepository} from "@/registry/ShardRepository";
+import {Expression} from "fuse.js";
 
 export async function fetchShard(slug: string): Promise<Shard> {
     const shard = await ShardRepository.find(shard => shard.name === slug);
@@ -11,14 +12,14 @@ export async function fetchShard(slug: string): Promise<Shard> {
     return shard;
 }
 
-export async function fetchFilteredShards(query: string, currentPage?: number): Promise<Shard[]> {
-    return ShardRepository.getAll();
+export async function fetchFilteredShards(query: string|Expression, currentPage?: number): Promise<Shard[]> {
+    return await ShardRepository.search(query);
 }
 
-export async function fetchFilteredShardCount(query: string): Promise<number> {
+export async function fetchFilteredShardCount(query: string|Expression): Promise<number> {
     return (await fetchFilteredShards(query)).length;
 }
 
-export async function fetchShardPages(query: string, itemsPerPage: number = 20): Promise<number> {
+export async function fetchShardPages(query: string|Expression, itemsPerPage: number = 20): Promise<number> {
     return Math.ceil((await fetchFilteredShardCount(query)) / itemsPerPage);
 }

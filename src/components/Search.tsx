@@ -6,7 +6,11 @@ import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {ReactElement} from "react";
 import {useDebouncedCallback} from "use-debounce";
 
-export function Search(): ReactElement {
+type SearchProps = {
+    searchParam? : string
+}
+
+export function Search({searchParam = 'query'}:SearchProps): ReactElement {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const {replace} = useRouter();
@@ -15,9 +19,9 @@ export function Search(): ReactElement {
         const params = new URLSearchParams(searchParams);
 
         if (term) {
-            params.set('search', term);
+            params.set(searchParam, term);
         } else {
-            params.delete('search');
+            params.delete(searchParam);
         }
 
         replace(`${pathname}?${params.toString()}`);
@@ -30,7 +34,7 @@ export function Search(): ReactElement {
             placeholder="Search..."
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
             onChange={({target}) => handleSearch(target.value)}
-            defaultValue={searchParams.get('search')?.toString()}
+            defaultValue={searchParams.get(searchParam)?.toString()}
         />
     </div>;
 }
