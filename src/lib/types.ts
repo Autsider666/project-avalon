@@ -1,15 +1,11 @@
 import {ReactNode} from "react";
 
-type Params = {
-    item: string | string[] | undefined,
-} & Record<string, string | undefined>;
-
-export type PageProps<SearchProps extends Record<string, unknown> = {}> = Readonly<{
-    params: Params,
-    searchParams: SearchProps & { [key: string]: string | string[] | undefined },
+export type PageProps<ParamProps extends Record<string, unknown> = {}, SearchProps extends Record<string, unknown> = {}> = Readonly<{
+    params: ParamProps,
+    searchParams: SearchProps,
 }>
 
-export type LayoutProps = Readonly<{
-    params: Params,
+export type LayoutProps<ParamProps extends Record<string, unknown> = {}> = Readonly<{
+    params: ParamProps,
     children: ReactNode;
 }>;

@@ -5,12 +5,8 @@ import {Shard} from "@/registry/Repository/ShardRepository";
 import {redirect} from "next/navigation";
 import {ReactElement} from "react";
 
-export default async function ShardPage({params}: PageProps<{ file?: string }>): Promise<ReactElement> {
-    const slug = params?.slug;
-    if (!slug) {
-        redirect('/shards');
-    }
-
+export default async function ShardPage({params}: PageProps<{ slug: string }>): Promise<ReactElement> {
+    const slug = params.slug;
     let shard: Shard | undefined;
 
     try {

@@ -9,11 +9,8 @@ import Link from "next/link";
 import {redirect} from "next/navigation";
 import {ReactElement} from "react";
 
-export default async function Layout({children, params}: LayoutProps): Promise<ReactElement> {
-    const slug = params?.slug;
-    if (!slug) {
-        redirect('/shards');
-    }
+export default async function Layout({children, params}: LayoutProps<{ slug: string }>): Promise<ReactElement> {
+    const slug = params.slug;
 
     let shard: Shard | undefined;
 
@@ -22,8 +19,6 @@ export default async function Layout({children, params}: LayoutProps): Promise<R
     } catch (e) {
         redirect('/shards');
     }
-
-    const activeFile = Object.values(shard.files)[0].identifier;
 
     const {name, creator, categories: unfilteredCategories, description} = shard;
 

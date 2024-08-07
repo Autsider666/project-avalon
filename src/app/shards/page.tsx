@@ -6,11 +6,11 @@ import {PageProps} from "@/lib/types";
 import {ReactElement, Suspense} from "react";
 
 type SearchParams = {
-    search?: string,
+    query?: string,
     page?: string,
 }
 
-export default async function ShardsPage({searchParams}: PageProps<SearchParams>): Promise<ReactElement> {
+export default async function ShardsPage({searchParams}: PageProps<{}, SearchParams>): Promise<ReactElement> {
     const query = Array.isArray(searchParams?.query) ? searchParams?.query.join(' ') : searchParams?.query || '';
     const shardsPerPage: number = 20;
     const currentPage = Number(searchParams?.page) || 1;

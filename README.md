@@ -1,6 +1,7 @@
 # Project Avalon
 
 ## TODO
+- [Metadata per page](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
 
 ## Ideas
 - [ ] Move TODO and Ideas to mdx files?
