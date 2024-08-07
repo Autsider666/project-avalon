@@ -2,6 +2,7 @@
 
 ## TODO
 - [Metadata per page](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
+- [getServerContext](https://dev.to/jdgamble555/easy-context-in-react-server-components-rsc-1mdf)
 
 ## Ideas
 - [ ] Move TODO and Ideas to mdx files?

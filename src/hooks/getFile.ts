@@ -3,6 +3,7 @@ import {promises as fs} from "fs";
 import path from "node:path";
 import {cache} from 'react';
 
+//TODO still needed?
 export const preload = (filePath: string): void => {
     void getFile(filePath);
 };
@@ -15,7 +16,7 @@ export const getFile = cache(async (filePath: string): Promise<{
 }> => {
     const code = await readFile(filePath.replace(/^@\//, 'src/'));
     // console.log(getFilenameAndExtension(filePath)); //TODO
-    console.log('getFile', filePath);
+    // console.log('getFile', filePath, process.cwd());
     return {
         path: filePath,
         code,

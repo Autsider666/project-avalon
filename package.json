@@ -2,13 +2,17 @@
   "name": "project-avalon",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run sync:registry && next build",
     "start": "next start",
+    "preview": "next build && next start -p 3001",
     "tsc": "tsc --noemit",
     "eslint": "next lint",
-    "lint": "npm run eslint && npm run tsc"
+    "lint": "npm run eslint && npm run tsc",
+    "sync:registry": "tsx src/script/syncRegistry.ts",
+    "sync:registry:watch": "tsx src/script/syncRegistry.ts -- --watch"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
@@ -31,10 +35,12 @@
     "@types/mdx": "^2.0.13",
     "@vercel/analytics": "^1.3.1",
     "@vercel/speed-insights": "^1.0.12",
+    "chokidar": "^3.6.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "excalibur": "^0.30.0-alpha.1135",
+    "fs-extra": "^11.2.0",
     "fuse.js": "^7.0.0",
     "html-react-parser": "^5.1.12",
     "lucide-react": "^0.420.0",
@@ -53,6 +59,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.14.14",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -61,6 +68,7 @@
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.16.5",
     "typescript": "^5"
   }
 }
