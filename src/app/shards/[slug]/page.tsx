@@ -1,5 +1,5 @@
 import {FilesOverview} from "@/components/shards/FilesOverview";
-import {fetchShard} from "@/lib/data";
+import {fetchShard, fetchShardPages, fetchShards} from "@/lib/data";
 import {PageProps} from "@/lib/types";
 import {Shard} from "@/registry/Repository/ShardRepository";
 import {redirect} from "next/navigation";
@@ -20,4 +20,14 @@ export default async function ShardPage({params}: PageProps<{ file?: string }>):
     }
 
     return <FilesOverview shard={shard}/>;
+}
+
+type PageParams = { slug: string };
+
+export async function generateStaticParams():Promise<PageParams[]> {
+    const shards = await fetchShards();
+
+    return shards.map(({name}) => ({
+        slug: name,
+    }));
 }

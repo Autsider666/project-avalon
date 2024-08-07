@@ -29,6 +29,9 @@ export function CmdkCommandMenu({className}: CommandMenuProps) {
         executeOnMount: {
             input: {query},
         },
+        onError(error) {
+            console.error(error);
+        }
     });
 
     useEffect(() => {

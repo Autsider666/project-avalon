@@ -1,5 +1,5 @@
 import {FilesOverview} from "@/components/shards/FilesOverview";
-import {fetchShard} from "@/lib/data";
+import {fetchShard, fetchShards} from "@/lib/data";
 import {PageProps} from "@/lib/types";
 import {Shard} from "@/registry/Repository/ShardRepository";
 import {redirect} from "next/navigation";
@@ -30,5 +30,25 @@ export default async function ItemPage({params}: PageProps): Promise<ReactElemen
 
     activeFile = decodeURIComponent(activeFile);
 
-    return <FilesOverview shard={shard} activeFileIdentifier={activeFile}/>;
+    return <>
+        <FilesOverview shard={shard} activeFileIdentifier={activeFile}/>
+    </>;
+}
+
+type PageParams = { slug: string, item: string[] };
+
+export async function generateStaticParams(): Promise<PageParams[]> {
+    const shards = await fetchShards();
+
+    const params: PageParams[] = [];
+    for (const {name, files} of shards) {
+        for (const {domain} of files) {
+            params.push({
+                slug: name,
+                item: domain.split('/'),
+            });
+        }
+    }
+
+    return params;
 }

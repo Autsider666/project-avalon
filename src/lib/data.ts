@@ -12,6 +12,10 @@ export async function fetchShard(slug: string): Promise<Shard> {
     return shard;
 }
 
+export async function fetchShards(): Promise<Shard[]> {
+    return ShardRepository.getAll();
+}
+
 export async function fetchFilteredShards(query: string|Expression, currentPage?: number): Promise<Shard[]> {
     const {results} = await ShardRepository.search(query);
     return results;

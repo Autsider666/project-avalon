@@ -3,6 +3,7 @@ import {NavHeader} from "@/components/nav/NavHeader";
 import {ThemeProvider} from "@/components/theme/ThemeProvider";
 import {TooltipProvider} from "@/components/ui/Tooltip";
 import {cn} from "@/lib/utils";
+import {SpeedInsights} from "@vercel/speed-insights/next";
 import type {Metadata} from "next";
 import {Inter as FontSans} from "next/font/google";
 import "../styles/globals.css";
@@ -48,6 +49,7 @@ export default function RootLayout({children}: RootLayoutProps) {
                         </div>
                     </TooltipProvider>
                 </ThemeProvider>
+                <SpeedInsights/>
             </body>
         </html>
     );
