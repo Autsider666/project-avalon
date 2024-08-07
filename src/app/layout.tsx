@@ -3,6 +3,7 @@ import {NavHeader} from "@/components/nav/NavHeader";
 import {ThemeProvider} from "@/components/theme/ThemeProvider";
 import {TooltipProvider} from "@/components/ui/Tooltip";
 import {cn} from "@/lib/utils";
+import {Analytics} from "@vercel/analytics/next";
 import {SpeedInsights} from "@vercel/speed-insights/next";
 import type {Metadata} from "next";
 import {Inter as FontSans} from "next/font/google";
@@ -22,7 +23,6 @@ export const metadata: Metadata = {
     title: "Project Avalon",
     description: "Gathering all the pieces of Excalibur",
 };
-
 
 export default function RootLayout({children}: RootLayoutProps) {
     return (
@@ -50,6 +50,7 @@ export default function RootLayout({children}: RootLayoutProps) {
                     </TooltipProvider>
                 </ThemeProvider>
                 <SpeedInsights/>
+                <Analytics/>
             </body>
         </html>
     );
