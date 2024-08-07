@@ -16,7 +16,7 @@ export const getFile = cache(async (filePath: string): Promise<{
 }> => {
     const code = await readFile(filePath.replace(/^@\//, 'src/'));
     // console.log(getFilenameAndExtension(filePath)); //TODO
-    // console.log('getFile', filePath, process.cwd());
+    // console.log('getFile', filePath);
     return {
         path: filePath,
         code,

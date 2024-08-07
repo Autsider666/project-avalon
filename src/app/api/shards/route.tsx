@@ -11,10 +11,11 @@ export async function GET(): Promise<Response> {
         "creator",
         "description",
         "categories",
-        "files.identifier",
-        "files.path",
-        "files.domain",
-        "files.code",
+        "files",
+        // "files.identifier",
+        // "files.path",
+        // "files.domain",
+        // "files.code",
     ];
     const index = Fuse.createIndex(keys, shards);
 

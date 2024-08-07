@@ -1,10 +1,9 @@
-"use server";
-
-import {Shard, ShardRepository} from "@/registry/Repository/ShardRepository";
+import {getShard, getShards, Shard} from "@/registry/shards";
 import {Expression} from "fuse.js";
+import 'server-only';
 
 export async function fetchShard(slug: string): Promise<Shard> {
-    const shard = await ShardRepository.find(shard => shard.name === slug);
+    const shard = getShard(slug);
     if (!shard) {
         throw new Error(`Could not find shard with slug "${slug}"`);
     }
@@ -13,12 +12,12 @@ export async function fetchShard(slug: string): Promise<Shard> {
 }
 
 export async function fetchShards(): Promise<Shard[]> {
-    return ShardRepository.getAll();
+    return getShards();
 }
 
 export async function fetchFilteredShards(query: string|Expression, currentPage?: number): Promise<Shard[]> {
-    const {results} = await ShardRepository.search(query);
-    return results;
+    // const {results} = await ShardRepository.search(query);
+    return getShards();
 }
 
 export async function fetchFilteredShardCount(query: string|Expression): Promise<number> {

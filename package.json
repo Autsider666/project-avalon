@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "npm run sync:registry && next build",
+    "build": "next build",
     "start": "next start",
     "preview": "next build && next start -p 3001",
     "tsc": "tsc --noemit",

@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 const watchFlag = process.argv.includes("--watch");
 
 const sourceDir: string = 'src/registry';
-const targetDir: string = 'registry';
+const targetDir: string = 'public/registry';
 
 try {
     // @ts-expect-error It's fixed, I swear! :P

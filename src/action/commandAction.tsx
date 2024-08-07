@@ -1,14 +1,13 @@
 "use server";
 
-import {getServerContext} from "@/hooks/getServerContext";
 import {actionClient} from "@/lib/safe-action";
-import {ShardRepository} from "@/registry/Repository/ShardRepository";
 import {ThemeRepository} from "@/registry/Repository/ThemeRepository";
+import {getShards, Shard} from "@/registry/shards";
 import {LaptopIcon, MoonIcon, SunIcon} from "@radix-ui/react-icons";
-import {FuseResult} from "fuse.js";
+import Fuse, {FuseResult} from "fuse.js";
 import {PuzzleIcon} from "lucide-react";
 import * as React from "react";
-import {ReactElement} from "react";
+import {cache, ReactElement} from "react";
 import {z} from "zod";
 
 type Command = {
@@ -23,7 +22,7 @@ type CommandGroup = {
     groupLabel: string,
     groupIcon?: ReactElement
     groupItems: Command[],
-    score?: number,
+    score: number,
 }
 
 type PossibleCommands = CommandGroup[]
@@ -48,24 +47,62 @@ function getGroupScore(results?: FuseResult<unknown>[]): number {
     ).score ?? 0;
 }
 
+const createIndex = cache(() => new Fuse(
+    getShards(),
+    {
+        includeScore: true,
+        includeMatches: true,
+        keys: [
+            "name",
+            "creator",
+            "description",
+            "categories",
+            "files.identifier",
+            "files.path",
+            "files.domain",
+            "files.code",
+        ],
+    },
+));
+
+function searchShards(query: string): FuseResult<Shard>[] {
+    return createIndex().search(query);
+}
+
+function getShardsGroup(query: string): CommandGroup {
+    const group: CommandGroup = {
+        groupLabel: 'shards',
+        groupIcon: <PuzzleIcon className="mr-2 h-4 w-4"/>,
+        groupItems: [],
+        score: 0,
+    };
+
+    if (query) {
+        const results = searchShards(query);
+        group.score = getGroupScore(results);
+        group.groupItems = results.map(({item: {name}}): Command => ({
+            label: name,
+            type: 'link',
+            value: `/shards/${name}`,
+        }));
+    } else {
+        group.groupItems = getShards().map(({name}): Command => ({
+            label: name,
+            type: 'link',
+            value: `/shards/${name}`,
+        }));
+    }
+
+    return group;
+}
+
 export const commandAction = actionClient
     .schema(schema)
     .action(async ({parsedInput: {query}}): Promise<PossibleCommands> => {
-        const {results: shards, fuse: fuseShards} = await ShardRepository.search(query);
         const {results: themes, fuse: fuseThemes} = await ThemeRepository.search(query);
-        // console.log(query, JSON.stringify(fuseShards, null, 4), JSON.stringify(fuseThemes, null, 4));
 
         return [
-            {
-                groupLabel: 'shards',
-                groupIcon: <PuzzleIcon className="mr-2 h-4 w-4"/>,
-                groupItems: shards.map(({name}): Command => ({
-                    label: name,
-                    type: 'link',
-                    value: `/shards/${name}`,
-                })),
-                score: getGroupScore(fuseShards),
-            },
+            getShardsGroup(query),
             {
                 groupLabel: 'themes',
                 groupItems: themes

@@ -1,7 +1,6 @@
 "use client";
 
-import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/HoverCard";
-import {Shard} from "@/registry/Repository/ShardRepository";
+import {Shard} from "@/registry/shards";
 import Link from "next/link";
 import {ReactElement} from "react";
 
@@ -12,29 +11,23 @@ type CodeTooltipProps = {
 }
 
 export function CodeTooltip({match, shard}: CodeTooltipProps): ReactElement {
-    const activeFileIdentifier = match.replaceAll("\"", "");
-    const activeFile = shard.files.find(({domain}) => domain === activeFileIdentifier);
-    if (!activeFile) {
-        throw new Error('Handle better asap!'); //FIXME
-    }
+    const activeFileDomain = match.replaceAll("\"", "");
 
-
-    const {domain, identifier} = activeFile;
-    if (identifier) {
+    // if (label) {
         return <Link
             className="underline decoration-dashed cursor-pointer underline-offset-4"
-            href={`/shards/${shard.name}/${domain}`}
+            href={`/shards/${shard.name}/${activeFileDomain}`}
         >{match}</Link>;
-    }
-
-    return (
-        <HoverCard openDelay={100}>
-            <HoverCardTrigger className="underline decoration-dotted">{match}</HoverCardTrigger>
-            <HoverCardContent className="w-full">
-                {domain}
-            </HoverCardContent>
-        </HoverCard>
-    );
+    // }
+    //
+    // return (
+    //     <HoverCard openDelay={100}>
+    //         <HoverCardTrigger className="underline decoration-dotted">{match}</HoverCardTrigger>
+    //         <HoverCardContent className="w-full">
+    //             {domain}
+    //         </HoverCardContent>
+    //     </HoverCard>
+    // );
 
     // return (
     //     <span data-link={match} className="relative group inline-block">

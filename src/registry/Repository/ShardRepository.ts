@@ -2,13 +2,13 @@ import {getFile} from "@/hooks/getFile";
 import {BaseRepository} from "@/registry/Repository/BaseRepository";
 
 export type File = {
-    identifier: string,
+    label: string,
     path: string,
     domain: string,
     code: string,
 }
 
-export type Shard = {
+type Shard = {
     name: string,
     creator?: string,
     description?: string,
@@ -21,7 +21,7 @@ const pathToFile = async (path: string): Promise<[string, File]> => {
     const domainParts = domain.split('/');
     const file = await getFile(path);
     return [domain, {
-        identifier: domainParts[domainParts.length - 1],
+        label: domainParts[domainParts.length - 1],
         path,
         domain,
         code: file.code,

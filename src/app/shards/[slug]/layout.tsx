@@ -3,7 +3,7 @@ import {Button} from "@/components/ui/Button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/Card";
 import {fetchShard} from "@/lib/data";
 import {LayoutProps} from "@/lib/types";
-import {Shard} from "@/registry/Repository/ShardRepository";
+import {Shard} from "@/registry/shards";
 import {clsx} from "clsx";
 import Link from "next/link";
 import {redirect} from "next/navigation";
