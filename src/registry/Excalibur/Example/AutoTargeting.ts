@@ -1,10 +1,11 @@
-import {HasTargetComponent} from "@/registry/Excalibur/Component/HasTargetComponent";
-import {Actor, Color, Engine} from "excalibur";
+import {Color, Engine} from "excalibur";
 
 const canvasElement = document.createElement('canvas');
 document.body.appendChild(canvasElement);
 
-console.log(new HasTargetComponent(new Actor()));
+console.log(canvasElement, canvasElement.getContext('2d'));
+
+// console.log(new HasTargetComponent(new Actor()));
 
 console.log('setting timeout');
 setTimeout(() => {

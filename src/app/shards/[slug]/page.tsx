@@ -1,3 +1,5 @@
+"use server";
+
 import {FilesOverview} from "@/components/shards/FilesOverview";
 import {fetchShard, fetchShards} from "@/lib/data";
 import {PageProps} from "@/lib/types";
@@ -20,7 +22,7 @@ export default async function ShardPage({params}: PageProps<{ slug: string }>): 
 
 type PageParams = { slug: string };
 
-export async function generateStaticParams():Promise<PageParams[]> {
+export async function generateStaticParams(): Promise<PageParams[]> {
     const shards = await fetchShards();
 
     return shards.map(({name}) => ({

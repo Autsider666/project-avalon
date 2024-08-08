@@ -1,13 +1,15 @@
+"use server";
+
 import 'server-only';
 import dynamic from "next/dynamic";
-import {ComponentType, ReactElement} from "react";
+import {ComponentType} from "react";
 
 export type Shard = {
     name: string,
     creator?: string,
     description?: string,
-    example?: string,
     exampleScene?: ComponentType,
+    example?: string,
     files: string[],
     categories?: string[],
 };
@@ -34,11 +36,11 @@ const shards: Shard[] = [
     },
 ] as const;
 
-export function getShards(): Shard[] {
+export async function getShards(): Promise<Shard[]> {
     return shards;
 }
 
-export function getShard(name: string): Shard {
+export async function getShard(name: string): Promise<Shard> {
     const shard = shards.find(shard => shard.name === name);
     if (!shard) {
         throw new Error(`Shard with name "${name}" does not exist.`);

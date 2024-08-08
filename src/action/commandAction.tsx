@@ -47,8 +47,8 @@ function getGroupScore(results?: FuseResult<unknown>[]): number {
     ).score ?? 0;
 }
 
-const createIndex = cache(() => new Fuse(
-    getShards(),
+const createIndex = cache(async () => new Fuse(
+    await getShards(),
     {
         includeScore: true,
         includeMatches: true,
@@ -65,11 +65,11 @@ const createIndex = cache(() => new Fuse(
     },
 ));
 
-function searchShards(query: string): FuseResult<Shard>[] {
-    return createIndex().search(query);
+async function searchShards(query: string): Promise<FuseResult<Shard>[]> {
+    return (await createIndex()).search(query);
 }
 
-function getShardsGroup(query: string): CommandGroup {
+async function getShardsGroup(query: string): Promise<CommandGroup> {
     const group: CommandGroup = {
         groupLabel: 'shards',
         groupIcon: <PuzzleIcon className="mr-2 h-4 w-4"/>,
@@ -78,7 +78,7 @@ function getShardsGroup(query: string): CommandGroup {
     };
 
     if (query) {
-        const results = searchShards(query);
+        const results = await searchShards(query);
         group.score = getGroupScore(results);
         group.groupItems = results.map(({item: {name}}): Command => ({
             label: name,
@@ -86,7 +86,7 @@ function getShardsGroup(query: string): CommandGroup {
             value: `/shards/${name}`,
         }));
     } else {
-        group.groupItems = getShards().map(({name}): Command => ({
+        group.groupItems = (await getShards()).map(({name}): Command => ({
             label: name,
             type: 'link',
             value: `/shards/${name}`,
@@ -102,7 +102,7 @@ export const commandAction = actionClient
         const {results: themes, fuse: fuseThemes} = await ThemeRepository.search(query);
 
         return [
-            getShardsGroup(query),
+            await getShardsGroup(query),
             {
                 groupLabel: 'themes',
                 groupItems: themes

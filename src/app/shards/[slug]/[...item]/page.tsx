@@ -1,3 +1,5 @@
+"use server";
+
 import {FilesOverview} from "@/components/shards/FilesOverview";
 import {fetchShard, fetchShards} from "@/lib/data";
 import {PageProps} from "@/lib/types";
