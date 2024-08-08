@@ -18,7 +18,7 @@ export const getFile = cache(async (filePath: string): Promise<{
     // console.log(getFilenameAndExtension(filePath)); //TODO
     // console.log('getFile', filePath);
     return {
-        path: filePath,
+        path: filePath.replace(/^@\//, 'src/'),
         code,
         extension: getFileExtension(filePath),
         name: getFileName(filePath),

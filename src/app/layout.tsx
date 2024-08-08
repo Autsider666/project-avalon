@@ -1,5 +1,6 @@
 import {DesktopNavMenu} from "@/components/nav/DesktopNavMenu";
 import {NavHeader} from "@/components/nav/NavHeader";
+import {SandPackStyles} from "@/components/sandpack-styles";
 import {ThemeProvider} from "@/components/theme/ThemeProvider";
 import {TooltipProvider} from "@/components/ui/Tooltip";
 import {cn} from "@/lib/utils";
@@ -27,6 +28,9 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: RootLayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning className={"excalibur"}>
+            <head>
+                <SandPackStyles/>
+            </head>
             <body
                 className={cn(
                     "min-h-screen bg-background font-sans antialiased",

@@ -15,6 +15,7 @@
     "sync:registry:watch": "tsx src/script/syncRegistry.ts -- --watch"
   },
   "dependencies": {
+    "@codesandbox/sandpack-react": "^2.18.2",
     "@headlessui/react": "^2.1.2",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
@@ -37,6 +38,7 @@
     "@vercel/speed-insights": "^1.0.12",
     "chokidar": "^3.6.0",
     "class-variance-authority": "^0.7.0",
+    "client-only": "^0.0.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "excalibur": "^0.30.0-alpha.1135",

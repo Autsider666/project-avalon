@@ -1,9 +1,13 @@
 import 'server-only';
+import dynamic from "next/dynamic";
+import {ComponentType, ReactElement} from "react";
 
 export type Shard = {
     name: string,
     creator?: string,
     description?: string,
+    example?: string,
+    exampleScene?: ComponentType,
     files: string[],
     categories?: string[],
 };
@@ -19,6 +23,8 @@ const shards: Shard[] = [
     {
         name: 'Auto-targeting',
         creator: 'Autsider',
+        example: '@/registry/Excalibur/Example/AutoTargeting.ts',
+        exampleScene: dynamic(async () => import('@/registry/Excalibur/Example/AutoTargetingScene'), {ssr: false}),
         files: [
             '@/registry/Excalibur/Component/SearchesTargetComponent.ts',
             '@/registry/Excalibur/Component/HasTargetComponent.ts',

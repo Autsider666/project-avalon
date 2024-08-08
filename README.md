@@ -27,6 +27,10 @@
   - [Jotai](https://jotai.org/docs/guides/nextjs)
     - [works with tRPC](https://jotai.org/docs/extensions/trpc)
     - [works with Zustand](https://jotai.org/docs/extensions/zustand)
+- [ ] Dependency injection
+  - https://github.com/vercel/next.js/discussions/46805#discussioncomment-8261261
+  - https://javascript.plainenglish.io/next-101-ioc-implementation-with-inversify-29ce548aad3b
+  - https://www.youtube.com/watch?v=9Z9uaFEIXt0
 
 ## Misc
 - [Check Vercel templates for inspiration](https://alejandrocelaya.blog/2023/11/05/build-a-search-page-for-your-astro-static-blog-with-fuse-js/)
