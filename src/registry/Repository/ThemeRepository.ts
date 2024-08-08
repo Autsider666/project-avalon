@@ -1,4 +1,4 @@
-import {BaseRepository} from "@/registry/Repository/BaseRepository";
+import {BaseRepository} from "@avalon/Repository/BaseRepository";
 
 export const themes: string[] = [
     'system',

@@ -1,5 +1,5 @@
-import {BaseComponent} from "@/registry/Excalibur/BaseComponent";
-import {HasTargetComponent} from "@/registry/Excalibur/Component/HasTargetComponent";
+import {BaseComponent} from "@avalon/Excalibur/Component/BaseComponent";
+import {HasTargetComponent} from "@avalon/Excalibur/Component/HasTargetComponent";
 import {Actor, PreUpdateEvent, TagQuery} from "excalibur";
 
 export class SearchesTargetComponent extends BaseComponent {
@@ -13,7 +13,6 @@ export class SearchesTargetComponent extends BaseComponent {
 
         this.queryTags = queryTags;
         this.maxDistance = maxDistance;
-
         this.on('preupdate', this.onPreUpdate.bind(this));
     }
 
@@ -41,7 +40,7 @@ export class SearchesTargetComponent extends BaseComponent {
             }
 
             const distance = owner.pos.distance(target.pos);
-            if (this.maxDistance && distance > this.maxDistance) { //FIXME pick closest target
+            if (this.maxDistance && distance > this.maxDistance) {
                 continue;
             }
 
@@ -55,8 +54,10 @@ export class SearchesTargetComponent extends BaseComponent {
 
         this.nextCheck = 1000;
 
-        if (closestTarget) {
-            owner.addComponent(new HasTargetComponent(closestTarget), true);
+        if (!closestTarget || owner.get(HasTargetComponent)?.target === closestTarget) {
+            return;
         }
+
+        owner.addComponent(new HasTargetComponent(closestTarget), true);
     }
 }

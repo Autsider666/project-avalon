@@ -1,4 +1,4 @@
-import {ExcaliburContainer, ExcaliburOptions} from "@/registry/Excalibur/Utility/ExcaliburContainer";
+import {ExcaliburContainer, ExcaliburOptions} from "@avalon/Excalibur/Utility/ExcaliburContainer";
 import {Scene} from "excalibur";
 import {ReactElement} from "react";
 

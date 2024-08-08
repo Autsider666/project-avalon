@@ -8,29 +8,36 @@ export type Shard = {
     name: string,
     creator?: string,
     description?: string,
-    exampleScene?: ComponentType,
-    example?: string,
+    example?: {
+        example: string,
+        scene: string,
+        component: ComponentType,
+    },
     files: string[],
     categories?: string[],
 };
 
 const shards: Shard[] = [
-    {
-        name: 'Fieldset Example',
-        creator: 'Autsider',
-        description: 'Test component',
-        files: ['@/components/form/Fieldset.tsx'],
-        // categories: ['test'],
-    },
+    // {
+    //     name: 'Fieldset Example',
+    //     creator: 'Autsider',
+    //     description: 'Test component',
+    //     files: ['@/components/form/Fieldset.tsx'],
+    //     // categories: ['test'],
+    // },
     {
         name: 'Auto-targeting',
         creator: 'Autsider',
-        example: '@/registry/Excalibur/Example/AutoTargeting.ts',
-        exampleScene: dynamic(async () => import('@/registry/Excalibur/Example/AutoTargetingScene'), {ssr: false}),
+        example: {
+            example: '@avalon/Excalibur/Example/AutoTargetingExample.ts',
+            scene: '@avalon/Excalibur/Scene/AutoTargetingScene.ts',
+            component: dynamic(async () => import('@avalon/Excalibur/React/AutoTargetingComponent'), {ssr: false}),
+        },
         files: [
-            '@/registry/Excalibur/Component/SearchesTargetComponent.ts',
-            '@/registry/Excalibur/Component/HasTargetComponent.ts',
-            '@/registry/Excalibur/BaseComponent.ts'
+            '@avalon/Excalibur/Component/SearchesTargetComponent.ts',
+            '@avalon/Excalibur/Component/ChasesTargetComponent.ts',
+            '@avalon/Excalibur/Component/HasTargetComponent.ts',
+            '@avalon/Excalibur/Component/BaseComponent.ts'
         ],
         categories: ['test'],
     },

@@ -1,5 +1,5 @@
 import {getFile} from "@/hooks/getFile";
-import {BaseRepository} from "@/registry/Repository/BaseRepository";
+import {BaseRepository} from "@avalon/Repository/BaseRepository";
 
 export type File = {
     label: string,
@@ -40,9 +40,9 @@ const baseShards: (Omit<Shard, 'files'> & { files: string[] })[] = [
         name: 'Auto-targeting',
         creator: 'Autsider',
         files: [
-            '@/registry/Excalibur/Component/SearchesTargetComponent.ts',
-            '@/registry/Excalibur/Component/HasTargetComponent.ts',
-            '@/registry/Excalibur/BaseComponent.ts'
+            '@avalon/Excalibur/Component/SearchesTargetComponent.ts',
+            '@avalon/Excalibur/Component/HasTargetComponent.ts',
+            '@avalon/Excalibur/BaseComponent.ts'
         ],
         categories: ['test'],
     },

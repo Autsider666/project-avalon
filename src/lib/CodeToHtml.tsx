@@ -1,6 +1,6 @@
 import {CodeTooltip} from "@/components/CodeTooltip";
 import {isBundledLanguage} from "@/lib/type-check";
-import {Shard} from "@/registry/shards";
+import {Shard} from "@avalon/shards";
 import {transformerRemoveLineBreak} from "@shikijs/transformers";
 import parse, {Element, HTMLReactParserOptions} from "html-react-parser";
 import {ReactElement, ReactNode} from "react";
@@ -56,7 +56,7 @@ function getBaseTransformer({
     if (popover) {
         transformer.postprocess = function (html, line) {
             return html.replaceAll(
-                /"(@\/[\w\/]*)"/gm,
+                /"(@(?:avalon)?\/[\w\/]*)"/gm,
                 (match): string => `<span data-popover=${match}>${match}</span>`,
             );
         };

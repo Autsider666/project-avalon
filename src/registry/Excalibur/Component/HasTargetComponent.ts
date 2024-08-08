@@ -1,4 +1,4 @@
-import {BaseComponent} from "@/registry/Excalibur/BaseComponent";
+import {BaseComponent} from "@avalon/Excalibur/Component/BaseComponent";
 import {Actor} from "excalibur";
 
 

@@ -1,6 +1,6 @@
 "use client";
 
-import {Shard} from "@/registry/shards";
+import {Shard} from "@avalon/shards";
 import Link from "next/link";
 import {ReactElement} from "react";
 

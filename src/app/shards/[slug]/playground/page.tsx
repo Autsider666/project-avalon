@@ -5,11 +5,12 @@ import {PageProps} from "@/lib/types";
 import {ReactElement} from "react";
 
 export default async function PlaygroundPage({params: {slug}}: PageProps<{ slug: string }>): Promise<ReactElement> {
-    const {exampleScene: Excalibur} = await fetchShard(decodeURIComponent(slug));
+    const {example} = await fetchShard(decodeURIComponent(slug), true);
 
+    const ExampleComponent = example?.component;
 
     return <main>
-        {Excalibur ? <Excalibur /> : undefined}
+        {ExampleComponent ? <ExampleComponent/> : 'No example found.'}
     </main>;
 }
 

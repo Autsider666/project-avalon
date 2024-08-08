@@ -3,7 +3,7 @@
 import {FilesOverview} from "@/components/shards/FilesOverview";
 import {fetchShard, fetchShards} from "@/lib/data";
 import {PageProps} from "@/lib/types";
-import {Shard} from "@/registry/shards";
+import {Shard} from "@avalon/shards";
 import {ReactElement} from "react";
 
 export default async function ItemPage({params}: PageProps<{ slug: string, item: string }>): Promise<ReactElement> {

@@ -5,7 +5,7 @@ import {CopyCodeButton} from "@/components/CopyCodeButton";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/Card";
 import {Combobox} from "@/components/ui/Combobox";
 import {getFile} from "@/hooks/getFile";
-import {Shard} from "@/registry/shards";
+import {Shard} from "@avalon/shards";
 import {ChevronDown} from "lucide-react";
 import {redirect} from "next/navigation";
 import {ReactElement} from "react";

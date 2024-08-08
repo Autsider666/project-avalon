@@ -1,16 +1,20 @@
 "use server";
 
-import {getShard, getShards, Shard} from "@/registry/shards";
+import {getShard, getShards, Shard} from "@avalon/shards";
 import {Expression} from "fuse.js";
 import 'server-only';
 
-export async function fetchShard(slug: string): Promise<Shard> {
-    const shard = await getShard(slug);
+export async function fetchShard(slug: string, includeExample: boolean = false): Promise<Shard> {
+    const shard = {
+        ...await getShard(slug),
+    };
     if (!shard) {
         throw new Error(`Could not find shard with slug "${slug}"`);
     }
 
-    delete shard.exampleScene;
+    if (!includeExample) {
+        delete shard.example;
+    }
 
     return shard;
 }

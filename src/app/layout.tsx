@@ -53,8 +53,8 @@ export default function RootLayout({children}: RootLayoutProps) {
                         </div>
                     </TooltipProvider>
                 </ThemeProvider>
-                <SpeedInsights/>
-                <Analytics/>
+                <SpeedInsights debug={false}/>
+                <Analytics debug={false}/>
             </body>
         </html>
     );

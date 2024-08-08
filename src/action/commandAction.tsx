@@ -1,8 +1,8 @@
 "use server";
 
 import {actionClient} from "@/lib/safe-action";
-import {ThemeRepository} from "@/registry/Repository/ThemeRepository";
-import {getShards, Shard} from "@/registry/shards";
+import {ThemeRepository} from "@avalon/Repository/ThemeRepository";
+import {getShards, Shard} from "@avalon/shards";
 import {LaptopIcon, MoonIcon, SunIcon} from "@radix-ui/react-icons";
 import Fuse, {FuseResult} from "fuse.js";
 import {PuzzleIcon} from "lucide-react";
