@@ -1,0 +1,1 @@
+export const SiteName: string = 'Project Avalon' as const;

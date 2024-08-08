@@ -36,34 +36,36 @@ export async function ShardTable({query, currentPage}: ShardTableProps): Promise
         <TableBody>
             {shards.map(
                 ({name, creator, categories = []}) =>
-                    <Link key={name} href={`/shards/${name}`} legacyBehavior={true}>
-                        <TableRow>
-                            <TableCell className="font-medium">{name}</TableCell>
-                            <TableCell>
-                                {categories.map(category => <Badge key={category} variant="outline">{category}</Badge>)}
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">{creator}</TableCell>
-                            <TableCell>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button
-                                            aria-haspopup="true"
-                                            size="icon"
-                                            variant="ghost"
-                                        >
-                                            <MoreHorizontal className="h-4 w-4"/>
-                                            <span className="sr-only">Toggle menu</span>
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end">
-                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                                        <DropdownMenuItem>Delete</DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </TableCell>
-                        </TableRow>
-                    </Link>
+                    <TableRow key={name}>
+                        <TableCell className="font-medium">
+                            <Link href={`/shards/${name}`}>
+                                {name}
+                            </Link>
+                        </TableCell>
+                        <TableCell>
+                            {categories.map(category => <Badge key={category} variant="outline">{category}</Badge>)}
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">{creator}</TableCell>
+                        <TableCell>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button
+                                        aria-haspopup="true"
+                                        size="icon"
+                                        variant="ghost"
+                                    >
+                                        <MoreHorizontal className="h-4 w-4"/>
+                                        <span className="sr-only">Toggle menu</span>
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </TableCell>
+                    </TableRow>
             )}
         </TableBody>
     </Table>

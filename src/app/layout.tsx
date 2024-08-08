@@ -3,6 +3,7 @@ import {NavHeader} from "@/components/nav/NavHeader";
 import {SandPackStyles} from "@/components/sandpack-styles";
 import {ThemeProvider} from "@/components/theme/ThemeProvider";
 import {TooltipProvider} from "@/components/ui/Tooltip";
+import {SiteName} from "@/constants";
 import {cn} from "@/lib/utils";
 import {Analytics} from "@vercel/analytics/next";
 import {SpeedInsights} from "@vercel/speed-insights/next";
@@ -21,7 +22,7 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-    title: "Project Avalon",
+    title: SiteName,
     description: "Gathering all the pieces of Excalibur",
 };
 

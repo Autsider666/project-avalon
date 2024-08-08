@@ -2,17 +2,21 @@
 
 import {CodeSandbox} from "@/components/CodeSandbox";
 import {FilesOverview} from "@/components/shards/FilesOverview";
+import {SiteName} from "@/constants";
 import {fetchShard, fetchShards} from "@/lib/data";
 import {PageProps} from "@/lib/types";
+import {Metadata} from "next";
 import {ReactElement} from "react";
 
-export default async function ShardPage({params}: PageProps<{ slug: string }>): Promise<ReactElement> {
+type ShardPageParams = { slug: string };
+
+export default async function ShardPage({params}: PageProps<ShardPageParams>): Promise<ReactElement> {
     const slug = params.slug;
     const shard = await fetchShard(decodeURIComponent(slug));
 
     return <>
-        <FilesOverview shard={shard}/>
         <CodeSandbox slug={slug}/>
+        <FilesOverview shard={shard}/>
     </>;
 }
 
@@ -24,4 +28,14 @@ export async function generateStaticParams(): Promise<PageParams[]> {
     return shards.map(({name}) => ({
         slug: name,
     }));
+}
+
+export async function generateMetadata({params: {slug}}: PageProps<ShardPageParams>): Promise<Metadata> {
+    const {name, description, creator} = await fetchShard(decodeURIComponent(slug));
+
+    return {
+        title: `Shard: ${name} | ${SiteName}`,
+        description,
+        creator
+    };
 }
