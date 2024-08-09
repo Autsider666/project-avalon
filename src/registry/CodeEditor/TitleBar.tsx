@@ -8,7 +8,7 @@ import {CheckIcon, CopyIcon, ListRestartIcon, SquareArrowOutUpRightIcon} from "l
 import {ReactElement, useEffect, useState} from "react";
 
 type TitleBarProps = {
-    title: string,
+    title?: string,
 }
 
 export function TitleBar({title}: TitleBarProps): ReactElement {

@@ -77,8 +77,7 @@
     }
 }
 
-/*pre.shiki {*/
-/*    padding: 15px;*/
-/*    border-radius: 0.5rem;*/
-/*    white-space: pre-wrap;*/
-/*}*/
+/* sandpack-file-explorer being difficult... */
+.code-sandbox [role="list"]>[role="listitem"]>div>span {
+    gap: 4px;
+}

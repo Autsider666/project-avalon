@@ -22,7 +22,7 @@ export const ShardRegistry: Shard[] = [
             '@avalon/Excalibur/Component/SearchesTargetComponent.ts',
             '@avalon/Excalibur/Component/ChasesTargetComponent.ts',
             '@avalon/Excalibur/Component/HasTargetComponent.ts',
-            '@avalon/Excalibur/Component/BaseComponent.ts'
+            '@avalon/Excalibur/Component/BaseComponent.ts',
         ],
         categories: ['component'],
     },
@@ -34,5 +34,19 @@ export const ShardRegistry: Shard[] = [
             '@avalon/Excalibur/Utility/ExcaliburContainer.tsx',
         ],
         categories: ['utility', 'react'],
-    }
+    },
+    {
+        name: 'Live Code Editor',
+        creator: 'Autsider',
+        files: [
+            '@avalon/CodeEditor/CodeEditor.tsx',
+            '@avalon/CodeEditor/TitleBar.tsx',
+            '@avalon/CodeEditor/FileExplorer.tsx',
+            '@avalon/CodeEditor/SideBar.tsx',
+            '@avalon/CodeEditor/Preview.tsx',
+            '@avalon/CodeEditor/Console.tsx',
+            //TODO what about @/components/ui/Resizable?
+        ],
+        categories: ['utility', 'react', 'editor'],
+    },
 ] as const;

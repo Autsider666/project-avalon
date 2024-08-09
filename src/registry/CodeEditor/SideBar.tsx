@@ -1,7 +1,7 @@
 "use client";
 
-import {Console} from "@/components/editor/Console";
-import {Preview} from "@/components/editor/Preview";
+import {Console} from "@avalon/CodeEditor/Console";
+import {Preview} from "@avalon/CodeEditor/Preview";
 import {Button} from "@/components/ui/Button";
 import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/Tooltip";
 import {useSandpack, useSandpackNavigation} from "@codesandbox/sandpack-react";
