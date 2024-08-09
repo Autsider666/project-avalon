@@ -1,7 +1,7 @@
 "use server";
 
 import {codeToHtml, getPopoverReplacer} from "@/lib/CodeToHtml";
-import {Shard} from "@avalon/shards";
+import {Shard} from "@/types/Shard";
 import {ReactElement} from "react";
 
 type CodeBlockProps = {

@@ -5,7 +5,7 @@ import {CopyCodeButton} from "@/components/CopyCodeButton";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/Card";
 import {Combobox} from "@/components/ui/Combobox";
 import {getFile} from "@/hooks/getFile";
-import {Shard} from "@avalon/shards";
+import {Shard} from "@/types/Shard";
 import {ChevronDown} from "lucide-react";
 import {redirect} from "next/navigation";
 import {ReactElement} from "react";
@@ -47,7 +47,7 @@ export async function FilesOverview({activeFileDomain, shard}: ShardFilesProps):
                         triggerVariant="ghost"
                         icon={<ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>}
                         canUnselect={false}
-                    />: shard.files[0]}
+                    /> : shard.files[0]}
 
                 </div>
                 <CopyCodeButton code={code}/>

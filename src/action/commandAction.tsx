@@ -1,8 +1,9 @@
 "use server";
 
+import {fetchShards} from "@/lib/data";
 import {actionClient} from "@/lib/safe-action";
+import {Shard} from "@/types/Shard";
 import {ThemeRepository} from "@avalon/Repository/ThemeRepository";
-import {getShards, Shard} from "@avalon/shards";
 import {LaptopIcon, MoonIcon, SunIcon} from "@radix-ui/react-icons";
 import Fuse, {FuseResult} from "fuse.js";
 import {PuzzleIcon} from "lucide-react";
@@ -48,7 +49,7 @@ function getGroupScore(results?: FuseResult<unknown>[]): number {
 }
 
 const createIndex = cache(async () => new Fuse(
-    await getShards(),
+    await fetchShards(),
     {
         includeScore: true,
         includeMatches: true,
@@ -86,7 +87,7 @@ async function getShardsGroup(query: string): Promise<CommandGroup> {
             value: `/shards/${name}`,
         }));
     } else {
-        group.groupItems = (await getShards()).map(({name}): Command => ({
+        group.groupItems = (await fetchShards()).map(({name}): Command => ({
             label: name,
             type: 'link',
             value: `/shards/${name}`,

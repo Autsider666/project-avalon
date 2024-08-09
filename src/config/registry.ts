@@ -1,23 +1,8 @@
-"use server";
-
-import 'server-only';
-import {ExampleComponent, ExampleProps} from "@/lib/registry/loadExample";
+import {ExampleProps} from "@/lib/registry/loadExample";
+import {Shard} from "@/types/Shard";
 import dynamic from "next/dynamic";
 
-export type Shard = {
-    name: string,
-    creator?: string,
-    description?: string,
-    example?: {
-        example: string,
-        scene: string,
-        component: ExampleComponent,
-    },
-    files: string[],
-    categories?: string[],
-};
-
-const shards: Shard[] = [
+export const ShardRegistry: Shard[] = [
     // {
     //     name: 'Fieldset Example',
     //     creator: 'Autsider',
@@ -51,16 +36,3 @@ const shards: Shard[] = [
         categories: ['utility', 'react'],
     }
 ] as const;
-
-export async function getShards(): Promise<Shard[]> {
-    return shards;
-}
-
-export async function getShard(name: string): Promise<Shard> {
-    const shard = shards.find(shard => shard.name === name);
-    if (!shard) {
-        throw new Error(`Shard with name "${name}" does not exist.`);
-    }
-
-    return shard;
-}

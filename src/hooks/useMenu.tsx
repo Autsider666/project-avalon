@@ -1,5 +1,5 @@
 import {ModeToggle} from "@/components/theme/ModeToggle";
-import {BookOpen, Puzzle, SquareTerminal, Sword} from "lucide-react";
+import {BookOpenIcon, HammerIcon, PuzzleIcon, SwordIcon} from "lucide-react";
 import {ReactElement} from "react";
 
 type MenuSection = 'top' | 'middle' | 'bottom';
@@ -33,7 +33,7 @@ export function useMenu(): MenuGroup[] {
                     type: "link",
                     label: "Home",
                     href: "/",
-                    getLogo: className => <Sword
+                    getLogo: className => <SwordIcon
                         className={`fill-foreground ${className}`}
                         color="#176baa"
                         style={{transform: 'rotate(90deg)'}}
@@ -48,19 +48,19 @@ export function useMenu(): MenuGroup[] {
                     type: "link",
                     label: "Shards",
                     href: "/shards",
-                    getLogo: className => <Puzzle className={className}/>
+                    getLogo: className => <PuzzleIcon className={className}/>
                 },
                 {
                     type: "link",
-                    label: "Playground",
-                    href: "/playground",
-                    getLogo: className => <SquareTerminal className={className}/>
+                    label: "Foundry",
+                    href: "/foundry",
+                    getLogo: className => <HammerIcon className={className}/>
                 },
                 {
                     type: "link",
                     label: "Documentation",
                     href: "/docs",
-                    getLogo: className => <BookOpen className={className}/>
+                    getLogo: className => <BookOpenIcon className={className}/>
                 },
             ],
         },

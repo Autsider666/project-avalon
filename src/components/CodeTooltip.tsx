@@ -1,6 +1,6 @@
 "use client";
 
-import {Shard} from "@avalon/shards";
+import {Shard} from "@/types/Shard";
 import Link from "next/link";
 import {ReactElement} from "react";
 
@@ -14,10 +14,10 @@ export function CodeTooltip({match, shard}: CodeTooltipProps): ReactElement {
     const activeFileDomain = match.replaceAll("\"", "");
 
     // if (label) {
-        return <Link
-            className="underline decoration-dashed cursor-pointer underline-offset-4"
-            href={`/shards/${shard.name}/${activeFileDomain}`}
-        >{match}</Link>;
+    return <Link
+        className="underline decoration-dashed cursor-pointer underline-offset-4"
+        href={`/shards/${shard.name}/${activeFileDomain}`}
+    >{match}</Link>;
     // }
     //
     // return (

@@ -2,7 +2,7 @@
 
 import {Button, ButtonProps} from "@/components/ui/Button";
 import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/Tooltip";
-import {CheckIcon, ClipboardIcon, CopyIcon} from "lucide-react";
+import {CheckIcon, CopyIcon} from "lucide-react";
 import {ReactElement, useEffect, useState} from "react";
 
 type CopyCodeButtonProps = {
@@ -36,7 +36,7 @@ export function CopyCodeButton({
                     }}
                     {...props}
                 >
-                    {hasCopied ? <CheckIcon className="size-3.5"/> : <CopyIcon className="size-3.5" />}
+                    {hasCopied ? <CheckIcon className="size-3.5"/> : <CopyIcon className="size-3.5"/>}
                     <span className="max-md:sr-only md:ml-2">Copy</span>
                 </Button>
             </TooltipTrigger>

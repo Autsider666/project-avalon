@@ -7,10 +7,10 @@ import {ReactElement} from "react";
 import {useDebouncedCallback} from "use-debounce";
 
 type SearchProps = {
-    searchParam? : string
+    searchParam?: string
 }
 
-export function Search({searchParam = 'query'}:SearchProps): ReactElement {
+export function Search({searchParam = 'query'}: SearchProps): ReactElement {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const {replace} = useRouter();

@@ -5,7 +5,7 @@ import {FilesOverview} from "@/components/shards/FilesOverview";
 import {SiteName} from "@/constants";
 import {fetchShard, fetchShards} from "@/lib/data";
 import {PageProps} from "@/lib/types";
-import {Shard} from "@avalon/shards";
+import {Shard} from "@/types/Shard";
 import {Metadata} from "next";
 import {ReactElement} from "react";
 

@@ -1,6 +1,5 @@
 import {BaseComponent} from "@avalon/Excalibur/Component/BaseComponent";
 import {HasTargetComponent} from "@avalon/Excalibur/Component/HasTargetComponent";
-import {Actor} from "excalibur";
 
 export class ChasesTargetComponent extends BaseComponent {
     constructor(

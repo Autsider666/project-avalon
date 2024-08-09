@@ -1,5 +1,4 @@
 import {CmdkCommandMenu} from "@/components/CmdkCommandMenu";
-import {CommandPalette} from "@/components/command-palette/ComandPalette";
 import {MobileNavMenu} from "@/components/nav/MobileNavMenu";
 import {ReactElement} from "react";
 

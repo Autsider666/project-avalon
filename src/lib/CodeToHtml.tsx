@@ -1,6 +1,6 @@
 import {CodeTooltip} from "@/components/CodeTooltip";
 import {isBundledLanguage} from "@/lib/type-check";
-import {Shard} from "@avalon/shards";
+import {Shard} from "@/types/Shard";
 import {transformerRemoveLineBreak} from "@shikijs/transformers";
 import parse, {Element, HTMLReactParserOptions} from "html-react-parser";
 import {ReactElement, ReactNode} from "react";
