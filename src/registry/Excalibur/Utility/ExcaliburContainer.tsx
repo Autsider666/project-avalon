@@ -10,17 +10,26 @@ const cleanup = new Map<string, number>();
 
 export type ExcaliburOptions = Omit<EngineOptions, 'canvasElementId' | 'canvasElement'>
 
-type Props = {
-    currentScene?: string,
+type ExcaliburContainerProps = {
+    className?: string,
     scene?: string,
     scenes?: Record<string, Scene>,
     actors?: Actor[],
     options?: ExcaliburOptions,
+    isRunning?: boolean,
 }
+
+const toggleEngine = (engine: Engine, shouldRun: boolean): void => {
+    if (shouldRun && !engine.clock.isRunning()) {
+        engine.clock.start();
+    } else if (!shouldRun && engine.clock.isRunning()) {
+        engine.once('postframe', () => engine.clock.stop());
+    }
+};
 
 const loadScenes = (engine: Engine, scenes: Record<string, Scene>): void => {
     for (const sceneName of Object.keys(scenes)) {
-        if (engine.scenes[sceneName]) {
+        if (engine.scenes[sceneName] === scenes[sceneName]) {
             continue;
         }
 
@@ -42,9 +51,11 @@ const loadActors = (engine: Engine, actors: Actor[]): void => {
 export const ExcaliburContainer = ({
                                        options,
                                        scene,
+                                       className,
                                        scenes = {},
                                        actors = [],
-                                   }: Props): ReactElement => {
+                                       isRunning = true,
+                                   }: ExcaliburContainerProps): ReactElement => {
     const instanceId = useId();
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [currentSceneName, setCurrentSceneName] = useState<string | undefined>(scene);
@@ -85,7 +96,7 @@ export const ExcaliburContainer = ({
         return (): void => {
             cleanup.set(instanceId, self.setTimeout(() => engine.stop(), 100));
         };
-    }, [actors, instanceId, options, scene, scenes]);
+    }, [actors, instanceId, options, isRunning, scene, scenes]);
 
     useEffect(() => {
         const engine = engines.get(instanceId);
@@ -105,11 +116,14 @@ export const ExcaliburContainer = ({
             engine.goToScene(scene)
                 .then(() => setCurrentSceneName(engine.currentSceneName))
                 .catch(() => console.error(`Unable to go to scene "${scene}`));
+        } else {
+            toggleEngine(engine, isRunning);
         }
-    }, [instanceId, scenes, actors, scene, currentSceneName]);
+    }, [instanceId, scenes, actors, scene, currentSceneName, isRunning]);
 
     return <canvas
         id={instanceId}
         ref={canvasRef}
+        className={className}
     ></canvas>;
 };

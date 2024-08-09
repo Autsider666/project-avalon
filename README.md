@@ -14,6 +14,7 @@
 - [Sidebar](https://github.com/salimi-my/shadcn-ui-sidebar)
 - [Check middleware](https://nextjs.org/docs/pages/building-your-application/routing/middleware)
 - [Preloading data for components](https://nextjs.org/docs/app/building-your-application/data-fetching/patterns#preloading-data)
+- [Sitemap](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap)
 
 ## Ideas
 - [ ] Move TODO and Ideas to mdx files?

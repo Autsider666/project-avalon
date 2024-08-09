@@ -1,8 +1,8 @@
 "use server";
 
 import 'server-only';
+import {ExampleComponent, ExampleProps} from "@/lib/registry/loadExample";
 import dynamic from "next/dynamic";
-import {ComponentType} from "react";
 
 export type Shard = {
     name: string,
@@ -11,7 +11,7 @@ export type Shard = {
     example?: {
         example: string,
         scene: string,
-        component: ComponentType,
+        component: ExampleComponent,
     },
     files: string[],
     categories?: string[],
@@ -31,7 +31,7 @@ const shards: Shard[] = [
         example: {
             example: '@avalon/Excalibur/Example/AutoTargetingExample.ts',
             scene: '@avalon/Excalibur/Scene/AutoTargetingScene.ts',
-            component: dynamic(async () => import('@avalon/Excalibur/React/AutoTargetingComponent'), {ssr: false}),
+            component: dynamic<ExampleProps>(async () => import('@avalon/Excalibur/React/AutoTargetingComponent'), {ssr: false}),
         },
         files: [
             '@avalon/Excalibur/Component/SearchesTargetComponent.ts',

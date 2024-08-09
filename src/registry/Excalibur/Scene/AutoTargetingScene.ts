@@ -5,7 +5,8 @@ import {Actor, CollisionType, Color, Scene, Vector} from "excalibur";
 const TargetTag = 'TARGET';
 
 export class AutoTargetingScene extends Scene {
-    onInitialize() {
+    constructor() {
+        super();
         this.backgroundColor = Color.Gray;
     }
 
@@ -35,10 +36,7 @@ export class AutoTargetingScene extends Scene {
                     collisionType: CollisionType.Active,
                 });
 
-                prey.on('collisionstart', ({}) => {
-                    prey.kill();
-                    console.log(`Prey ${prey.id} was killed.`);
-                });
+                prey.on('collisionstart', () => prey.kill());
 
                 prey.addTag(TargetTag);
 
