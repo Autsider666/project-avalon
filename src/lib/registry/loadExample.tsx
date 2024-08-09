@@ -17,7 +17,8 @@ export function loadExample(scene: Scene, options?: ExcaliburOptions): ExampleCo
     return ({autorun = false}: ExampleProps) => {
         const [isRunning, setIsRunning] = useState(autorun);
 
-        return <div className="grid grid-cols-0 gap-3">
+
+        return <div className="relative grid grid-cols-0 gap-3">
             <div className="flex items-center space-x-2">
                 <Switch id="example-toggle" checked={isRunning} onCheckedChange={setIsRunning}/>
                 <Label htmlFor="example-toggle">Run Example</Label>

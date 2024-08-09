@@ -2,6 +2,9 @@
 
 ## TODO
 - [createPage helper](https://saas-ui.dev/blog/nextjs-create-page-helper-with-loader-pattern)
+- Shard config
+  - Add link to repository for shard files.
+  - Split shard configs up to separate files.
 - Custom Command Palatte
   - Implement animation from cmdk
   - Tabs below/above search to only show specific group, including number of matching results
@@ -32,6 +35,9 @@
   - https://github.com/vercel/next.js/discussions/46805#discussioncomment-8261261
   - https://javascript.plainenglish.io/next-101-ioc-implementation-with-inversify-29ce548aad3b
   - https://www.youtube.com/watch?v=9Z9uaFEIXt0
+- [ ] Alternatives to tweakpane
+  - [lil-gui](https://lil-gui.georgealways.com/#Guide)
+  - [DataVerse](https://github.com/theatre-js/theatre/tree/main/packages/dataverse)
 
 ## Misc
 - [Check Vercel templates for inspiration](https://alejandrocelaya.blog/2023/11/05/build-a-search-page-for-your-astro-static-blog-with-fuse-js/)

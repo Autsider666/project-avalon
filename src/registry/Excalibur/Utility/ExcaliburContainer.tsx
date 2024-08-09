@@ -1,8 +1,5 @@
-"use client";
-
 import {Actor, Engine, EngineOptions, Scene} from "excalibur";
 import {ReactElement, useEffect, useId, useRef, useState} from "react";
-import "client-only";
 
 const engines = new Map<string, Engine>();
 
