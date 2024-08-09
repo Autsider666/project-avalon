@@ -35,7 +35,7 @@ export async function FilesOverview({activeFileDomain, shard}: ShardFilesProps):
         <CardHeader>
             <CardTitle className="flex items-center justify-between">
                 <div className="text-2xl font-bold">
-                    <Combobox
+                    {shard.files.length > 1 ? <Combobox
                         items={shard.files.map((domain) => ({
                             label: domain, //TODO Add label extractor
                             value: domain,
@@ -47,7 +47,8 @@ export async function FilesOverview({activeFileDomain, shard}: ShardFilesProps):
                         triggerVariant="ghost"
                         icon={<ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>}
                         canUnselect={false}
-                    />
+                    />: shard.files[0]}
+
                 </div>
                 <CopyCodeButton code={code}/>
             </CardTitle>

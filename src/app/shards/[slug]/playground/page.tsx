@@ -20,7 +20,11 @@ export async function generateStaticParams(): Promise<PageParams[]> {
     const shards = await fetchShards();
 
     const params: PageParams[] = [];
-    for (const {name, files} of shards) {
+    for (const {name, files, example} of shards) {
+        if (!example) {
+            continue;
+        }
+
         for (const domain of files) {
             params.push({
                 slug: name,

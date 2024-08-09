@@ -39,8 +39,17 @@ const shards: Shard[] = [
             '@avalon/Excalibur/Component/HasTargetComponent.ts',
             '@avalon/Excalibur/Component/BaseComponent.ts'
         ],
-        categories: ['test'],
+        categories: ['component'],
     },
+    {
+        name: 'Running Excalibur in React',
+        creator: 'Autsider',
+        description: 'Getting Excalibur to run in react is a hassle, especially in development with React StrictMode enabled.',
+        files: [
+            '@avalon/Excalibur/Utility/ExcaliburContainer.tsx',
+        ],
+        categories: ['utility', 'react'],
+    }
 ] as const;
 
 export async function getShards(): Promise<Shard[]> {

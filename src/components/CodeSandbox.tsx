@@ -19,8 +19,12 @@ type CodeSandboxProps = {
     autorun?: boolean,
 }
 
-export async function CodeSandbox({slug, autorun = false}: CodeSandboxProps): Promise<ReactElement> {
+export async function CodeSandbox({slug, autorun = false}: CodeSandboxProps): Promise<ReactElement|undefined> {
     const shard = await fetchShard(decodeURIComponent(slug), true);
+    if (!shard.example) {
+        return undefined;
+    }
+
     const files: SandpackFiles = {
         "/tsconfig.json": {
             code: JSON.stringify({

@@ -44,12 +44,14 @@ export default async function Layout({children, params}: LayoutProps<{ slug: str
                 </Link>
                 </span>
 
-                {hasCategories ? categories.map(category => <Link key={category}
-                                                                  href={`/shards?category=${category}`}>
-                    <Badge variant="default" className="ml-auto sm:ml-0 capitalize text-xs">
-                        {category}
-                    </Badge>
-                </Link>) : undefined}
+                {hasCategories ? <span className="flex gap-2">
+                    {categories.map(category => <Link key={category}
+                                                      href={`/shards?category=${category}`}>
+                        <Badge variant="default" className="ml-auto sm:ml-0 capitalize text-xs">
+                            {category}
+                        </Badge>
+                    </Link>)}
+                </span> : undefined}
             </div>
             {description ? <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
