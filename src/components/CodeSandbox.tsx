@@ -1,5 +1,6 @@
 "use server";
 
+import {SandpackTitleBar} from "@/components/sandpack/SandpackTitleBar";
 import {getFile} from "@/hooks/getFile";
 import {fetchShard} from "@/lib/data";
 import {
@@ -18,7 +19,7 @@ type CodeSandboxProps = {
     autorun?: boolean,
 }
 
-export async function CodeSandbox({slug, autorun}: CodeSandboxProps): Promise<ReactElement> {
+export async function CodeSandbox({slug, autorun = false}: CodeSandboxProps): Promise<ReactElement> {
     const shard = await fetchShard(decodeURIComponent(slug), true);
     const files: SandpackFiles = {
         "/tsconfig.json": {
@@ -68,52 +69,66 @@ export async function CodeSandbox({slug, autorun}: CodeSandboxProps): Promise<Re
     }
 
     return (
-        <SandpackProvider
-            files={files}
-            theme="dark"
-            template="vanilla-ts"
-            options={{
-                autoReload: false,
-                autorun,
-                visibleFiles: ['/index.ts'],
-                activeFile: '/index.ts',
-            }}
-            customSetup={{
-                dependencies: {
-                    excalibur: 'next',
-                },
-            }}
-        >
-            <SandpackLayout>
-                <SandpackFileExplorer
-                    style={{
-                        height: "400px",
-                        minWidth: "20%",
-                    }}
-                />
-                <SandpackCodeEditor
-                    style={{
-                        height: "400px",
-                        minWidth: "70%",
-                    }}
-                    showLineNumbers
-                    showTabs
-                />
-                <SandpackPreview
-                    style={{
-                        height: "400px",
-                        minWidth: "70%",
-                    }}
-                />
-                <SandpackConsole
-                    showHeader={true}
-                    style={{
-                        height: "400px",
-                        minWidth: "25%",
-                    }}
+        <div className="flex h-full flex-col">
+            {/*<div className="flex items-center justify-between border-1 rounded-t-lg py-2"*/}
+            {/*     style={{*/}
+            {/*         backgroundColor: '#151515', color: '#c0caf5', borderColor: '#252525',*/}
+            {/*     }}*/}
+            {/*>*/}
+            {/*    <div className="flex-1 pl-8"></div>*/}
+            {/*    <a href="https://kempo.io" target="_blank" className="font-showcase text-xl font-black"*/}
+            {/*       rel="noreferrer">Kempo</a>*/}
+            {/*    <div className="mt-0.5 flex h-full flex-1 justify-end gap-6 pr-8"></div>*/}
+            {/*</div>*/}
+            <SandpackProvider
+                files={files}
+                theme="dark"
+                template="vanilla-ts"
+                options={{
+                    autoReload: false,
+                    autorun,
+                    visibleFiles: ['/index.ts'],
+                    activeFile: '/index.ts',
+                }}
+                customSetup={{
+                    dependencies: {
+                        excalibur: 'next',
+                    },
+                }}
+            >
+                <SandpackLayout className="!-mx-4 !rounded-none sm:!mx-0 sm:!rounded-lg">
+                    <SandpackTitleBar title={shard.name}/>
+                    <SandpackFileExplorer
+                        style={{
+                            height: "400px",
+                            minWidth: "20%",
+                        }}
+                    />
+                    <SandpackCodeEditor
+                        style={{
+                            height: "400px",
+                            minWidth: "70%",
+                        }}
+                        showLineNumbers
+                        showTabs
+                    />
+                    <SandpackPreview
+                        style={{
+                            height: "400px",
+                            minWidth: "70%",
+                        }}
+                        showOpenInCodeSandbox={false}
+                    />
+                    <SandpackConsole
+                        showHeader={true}
+                        style={{
+                            height: "400px",
+                            minWidth: "25%",
+                        }}
 
-                />
-            </SandpackLayout>
-        </SandpackProvider>
+                    />
+                </SandpackLayout>
+            </SandpackProvider>
+        </div>
     );
 }
