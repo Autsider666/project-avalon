@@ -1,17 +1,13 @@
 "use server";
 
-import {SandpackTitleBar} from "@/components/sandpack/SandpackTitleBar";
+import {FileExplorer} from "@/components/editor/FileExplorer";
+import {SideBar} from "@/components/editor/SideBar";
+import {TitleBar} from "@/components/editor/TitleBar";
+import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/components/ui/Resizable";
 import {getFile} from "@/hooks/getFile";
 import {fetchShard} from "@/lib/data";
-import {
-    SandpackCodeEditor,
-    SandpackConsole,
-    SandpackFileExplorer,
-    SandpackFiles,
-    SandpackLayout,
-    SandpackPreview,
-    SandpackProvider
-} from "@codesandbox/sandpack-react";
+import {SandpackCodeEditor, SandpackFiles, SandpackLayout, SandpackProvider} from "@codesandbox/sandpack-react";
+import dynamic from "next/dynamic";
 import {ReactElement} from "react";
 
 type CodeSandboxProps = {
@@ -19,7 +15,8 @@ type CodeSandboxProps = {
     autorun?: boolean,
 }
 
-export async function CodeSandbox({slug, autorun = false}: CodeSandboxProps): Promise<ReactElement | undefined> {
+
+export async function CodeSandbox({slug, autorun = true}: CodeSandboxProps): Promise<ReactElement | undefined> {
     const shard = await fetchShard(decodeURIComponent(slug), true);
     if (!shard.example) {
         return undefined;
@@ -73,66 +70,61 @@ export async function CodeSandbox({slug, autorun = false}: CodeSandboxProps): Pr
     }
 
     return (
-        <div className="flex h-full flex-col">
-            {/*<div className="flex items-center justify-between border-1 rounded-t-lg py-2"*/}
-            {/*     style={{*/}
-            {/*         backgroundColor: '#151515', color: '#c0caf5', borderColor: '#252525',*/}
-            {/*     }}*/}
-            {/*>*/}
-            {/*    <div className="flex-1 pl-8"></div>*/}
-            {/*    <a href="https://kempo.io" target="_blank" className="font-showcase text-xl font-black"*/}
-            {/*       rel="noreferrer">Kempo</a>*/}
-            {/*    <div className="mt-0.5 flex h-full flex-1 justify-end gap-6 pr-8"></div>*/}
-            {/*</div>*/}
-            <SandpackProvider
-                files={files}
-                theme="dark"
-                template="vanilla-ts"
-                options={{
-                    autoReload: false,
-                    autorun,
-                    visibleFiles: ['/index.ts'],
-                    activeFile: '/index.ts',
-                }}
-                customSetup={{
-                    dependencies: {
-                        excalibur: 'next',
-                    },
-                }}
-            >
-                <SandpackLayout className="!-mx-4 !rounded-none sm:!mx-0 sm:!rounded-lg">
-                    <SandpackTitleBar title={shard.name}/>
-                    <SandpackFileExplorer
-                        style={{
-                            height: "400px",
-                            minWidth: "20%",
-                        }}
-                    />
-                    <SandpackCodeEditor
-                        style={{
-                            height: "400px",
-                            minWidth: "70%",
-                        }}
-                        showLineNumbers
-                        showTabs
-                    />
-                    <SandpackPreview
-                        style={{
-                            height: "400px",
-                            minWidth: "70%",
-                        }}
-                        showOpenInCodeSandbox={false}
-                    />
-                    <SandpackConsole
-                        showHeader={true}
-                        style={{
-                            height: "400px",
-                            minWidth: "25%",
-                        }}
-
-                    />
-                </SandpackLayout>
-            </SandpackProvider>
-        </div>
+        <>
+            <div className="min-h-max w-full">
+                <SandpackProvider
+                    files={files}
+                    theme="dark"
+                    template="vanilla-ts"
+                    options={{
+                        autoReload: false,
+                        autorun,
+                        visibleFiles: ['/index.ts'],
+                        activeFile: '/index.ts',
+                    }}
+                    customSetup={{
+                        dependencies: {
+                            excalibur: 'next',
+                        },
+                    }}
+                >
+                    <SandpackLayout className="!-mx-4 !rounded-none sm:!mx-0 sm:!rounded-lg">
+                        <TitleBar title={shard.name}/>
+                        <ResizablePanelGroup
+                            direction="vertical"
+                            // className="flex h-screen flex-col border"
+                            className="min-h-screen border"
+                        >
+                            <ResizablePanel defaultSize={60} minSize={25} collapsible collapsedSize={0}>
+                                <ResizablePanelGroup
+                                    direction="horizontal"
+                                >
+                                    <ResizablePanel defaultSize={25} minSize={10} maxSize={50}>
+                                        <FileExplorer/>
+                                    </ResizablePanel>
+                                    <ResizableHandle withHandle className="z-50"/>
+                                    <ResizablePanel defaultSize={75}>
+                                        <SandpackCodeEditor
+                                            style={{
+                                                height: "100%",
+                                                minWidth: "100%",
+                                            }}
+                                            showLineNumbers
+                                            showTabs
+                                            showInlineErrors
+                                            showRunButton={false}
+                                        />
+                                    </ResizablePanel>
+                                </ResizablePanelGroup>
+                            </ResizablePanel>
+                            <ResizableHandle withHandle/>
+                            <ResizablePanel collapsible collapsedSize={4} defaultSize={40} minSize={25}>
+                                <SideBar/>
+                            </ResizablePanel>
+                        </ResizablePanelGroup>
+                    </SandpackLayout>
+                </SandpackProvider>
+            </div>
+        </>
     );
 }
