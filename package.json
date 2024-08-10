@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "preview": "next build && next start -p 3001",
     "tsc": "tsc --noemit",
